@@ -128,7 +128,11 @@ class Server
         $this->messageService->storeMessage($account, $message);
         //属于文字类型消息
         if ($message['MsgType'] == 'text') {
-            $replies = Cache::get('replies_'.$account->id);
+            $replies = (array) Cache::get('replies_'.$account->id);
+
+            if (empty($replies)) {
+                return $this->handleNoMatch($account);
+            }
 
             foreach ($replies as $key => $reply) {
                 //查找字符串

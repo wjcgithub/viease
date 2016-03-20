@@ -37,7 +37,7 @@ class MenuController extends Controller
      */
     public function getIndex()
     {
-        return admin_view('menu.index', compact('menus'));
+        return admin_view('menu.index');
     }
 
     /**
