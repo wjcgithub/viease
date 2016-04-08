@@ -2,7 +2,7 @@
 
 微易，一款基于 [Laravel](http://laravel.com) 开发的，使用 [overtrue/wechat](https://github.com/overtrue/wechat) SDK 做为微信接入的微信公众平台管理系统框架。http://viease.cn/
 
-> 此项目为我们多个人业务未完全做完的一个产品，只是开源出来大家去贡献，一起完善它。
+> 此项目为我们多个人业余未完全做完的一个产品，只是开源出来大家去贡献，一起完善它。
 > 那么，请不要在群里 @ 我提一些细节问题，我没有时间来帮忙你解决。你要是解决不了，就不要用了，你要是解决了，欢迎贡献 PR。
 > 你在玩这个东西之前有必要阅读完这一整篇 README，否则加群问问题也没有人理你。
 > 最后，谢谢配合！:pray:
@@ -121,7 +121,7 @@
 # 友情提示
 
 1. 如果你使用 Homestead，环境可能缺少 mcrypt 拓展，那么使用以下命令来更新系统：
-    
+
     ```shell
     $ sudo apt-get update && sudo apt-get install mcrypt php7.0-mcrypt && sudo apt-get upgrade
     ```
@@ -129,26 +129,26 @@
 # Docker
 
 1. 运行下面命令启动容器（镜像下载过程可能会很漫长，请尝试国内Docker服务商提供的加速服务）
-	
+
     ```shell
     $ sudo docker run -d -p 8080:80 -p 2222:22 lee2011/viease
     ```
- 
+
 2. ssh 到你的容器中 （密码：secret）
 
     ```shell
     $ ssh -p 2222 homestead@localhost
     ```
- 
+
 3. 修改 `/var/www/html/.env` 文件，配置数据库(容器中不包含数据库，请根据需要自己安装或者连接其他主机上的数据库服务器)，然后运行 artisan 命令创建数据库
-    
+
     ```shell
     $ php artisan migrate
     $ php artisan db:seed
     ```
- 
-4. 访问后台： `your-server-ip:8080/admin` 
- 
+
+4. 访问后台： `your-server-ip:8080/admin`
+
 
 # 说明
 
