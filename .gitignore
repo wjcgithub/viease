@@ -1,6 +1,7 @@
 .phpintel/
 *storage/framework/session/*
 storage/logs/laravel.log
+storage/debugbar/*
 composer.lock
 .env
 .DS_Store
