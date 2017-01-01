@@ -23,8 +23,10 @@ define(['jquery', 'repos/material', 'uploader', 'pager', 'admin/common'], functi
 
         var $pagers = {};
 
-        var $imageUploader = Uploader.make('.upload-image', 'image', function(){
-
+        var $imageUploader = Uploader.make('.upload-image', 'image', function(material, file){
+            var $container = $containers['image'];
+            var $template = $templates['image'];
+            $container.append($template(material));
         });
 
         // 当无内容时显示“无内容”提示

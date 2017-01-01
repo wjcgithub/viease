@@ -47,6 +47,17 @@ class MaterialController extends Controller
         return admin_view('material.index');
     }
 
+    public function getImglib()
+    {
+        if(isset($_REQUEST['ajax'])){
+            $data = $this->materialRepository->getList($this->account()->id, 'image', 10)->toArray();
+            $count = $this->materialRepository->countImage($this->account()->id);
+            $data['total'] =$count;
+            return $data;
+        }
+        return admin_view('material.imglib');
+    }
+
     /**
      * 取得素材列表.
      *

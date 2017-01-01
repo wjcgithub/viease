@@ -39,7 +39,7 @@
                     <label>封面<small>（小图片建议尺寸：200像素 * 200像素）</small></label>
                     <div>
                         <button type="button" class="btn btn-light">上传</button>
-                        <button type="button" class="btn btn-light">从图片库选择</button>
+                        <button type="button" class="btn btn-open-imglib btn-light">从图片库选择</button>
                         <label>
                             <input type="checkbox" name="show_cover_pic" value="" class="js-switch" data-size="small">
                             封面图片显示在正文中
@@ -83,6 +83,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('js/plugins/ueditor/themes/viease/css/ueditor.css') }}">
+<link rel="stylesheet" href="{{ asset('js/plugins/layer/skin/default/layer.css') }}">
 @stop
 
 @section('pre_js')
