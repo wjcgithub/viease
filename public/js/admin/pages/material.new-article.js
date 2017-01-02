@@ -50,6 +50,7 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','lay
 
         // 保存form
         function saveForm () {
+            console.log(11);
             var $id = $('.article-preview-item.active').prop('id');
             var $attributes = Util.parseForm($($form));
 
@@ -113,8 +114,6 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','lay
          * 弹出选择图片提示框
          */
         function showChoseImageDialog(obj, content){
-            console.log(layer);
-
             var _this = obj;
             layer.open({
                 title:'选择图片',
@@ -132,14 +131,14 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','lay
                     }
 
                     //设置图片
-                    var imagePath       = body.find(".chose_icon").attr("src");
-                    // alert(imagePath);
+                    var imagePath = body.find(".chose_icon").attr("src");
                     //设置input值
-                    $('.form-group').find('input[type=hidden]').val(imagePath);
+                    $('.form-group-div').find('input[type=hidden]').val(imagePath);
                     //修改图片src属性
-                    $('.form-group').find('img').attr('src', imagePath);
+                    $('.form-group-div').find('img').attr('src', imagePath);
                     layer.closeAll()
-
+                    //设置预览图片
+                    // article-preview-item-cover-placeholder
                 },
                 cancel: function(layero, index){
                     layer.closeAll()

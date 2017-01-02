@@ -19,24 +19,9 @@ requirejs.config({
         jquery: '//cdn.bootcss.com/jquery/2.1.4/jquery.min',
         jqpager:'plugins/JqueryPagination/jquery.pagination-1.2.7',
         layer:'plugins/layer/layer',
-        underscore: 'underscore-min',
-        fastclick: 'fastclick.min',
-        relocator: 'relocator-1.0.1.min',
-        store: 'store-json2.min',
-        validator: 'plugins/validator.js/lib/validator',
-        sweetalert: 'plugins/sweetalert/lib/sweet-alert.min',
-        selectpicker: 'plugins/bootstrap-select/dist/js/bootstrap-select.min',
-        selectpickerLang: 'plugins/bootstrap-select/dist/js/i18n/defaults-zh_CN',
-        magnificPopup: 'plugins/magnific-popup/dist/jquery.magnific-popup.min',
-        sweetalertUtil: 'sweetalert.util',
-        plupload: 'plugins/plupload/js/plupload.full.min',
-
-        WeChatEditor: 'wechat-editor',
-
         // tools
         util: 'admin/util',
         pager: 'pager',
-        uploader: 'uploader'
     },
     shim: {
         jquery: {
@@ -52,13 +37,6 @@ requirejs.config({
         layer:{
             exports: 'layer',
             deps: ['plugins/validator.js/i18n/zh_CN']
-        },
-        plupload: {
-            exports: 'plupload'
-        },
-        validator: {
-            exports: 'Validator',
-            deps: ['jquery']
         },
         bootstrap: ['jquery'],
         sweetalertUtil: ['sweetalert'],

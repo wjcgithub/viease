@@ -7,16 +7,6 @@ define(['jquery', 'jqpager', 'layer'], function ($) {
     $(function(){
         var obj =  $("#imglist");
         var content = obj.html();
-        var tag = '<span style="position:absolute;top: 40px;width:50px;left:45px" class=" col-sm-4 tag">'+
-            '<i class="fa fa-check-circle" style="color:#ffffff;font-size:24px"></i>'+
-            '</span>';
-
-        function selectImg(t){
-            $(".tag").remove();
-            $(t).after(tag);//点击加上标记
-            $(".thisimg").removeClass("chose_icon");
-            $(t).addClass("chose_icon");
-        }
 
         //ajax 分页
         $.fn.page.defaults = {
@@ -55,9 +45,16 @@ define(['jquery', 'jqpager', 'layer'], function ($) {
                 totalName: 'total'              //指定返回数据的总数据量的字段名
             }
         });
-
-
     });
-
-
 });
+
+function selectImg(t){
+    var tag = '<span style="position:absolute;top: 40px;width:50px;left:45px" class=" col-sm-4 tag">'+
+        '<i class="fa fa-check-circle" style="color:#ffffff;font-size:24px"></i>'+
+        '</span>';
+
+    $(".tag").remove();
+    $(t).after(tag);//点击加上标记
+    $(".thisimg").removeClass("chose_icon");
+    $(t).addClass("chose_icon");
+}

@@ -53,7 +53,7 @@ requirejs.config({
         },
         validator: {
             exports: 'Validator',
-            deps: ['jquery']
+            deps: ['plugins/validator.js/i18n/zh_CN']
         },
         bootstrap: ['jquery'],
         sweetalertUtil: ['sweetalert'],
