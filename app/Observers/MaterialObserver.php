@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Services\Material as MaterialService;
 use App\Models\Material;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Material模型观察者.
@@ -35,6 +36,7 @@ class MaterialObserver
     {
         //artile类型不可放到监听中
         if ($material->type != 'article' && !$material->original_id && $material->parent_id) {
+            Log::info('查询original_id：'.'obj is'.json_encode($material));
             $material->original_id = $this->materialService->postToRemote($material);
         }
     }

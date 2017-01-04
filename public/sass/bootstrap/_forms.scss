@@ -205,6 +205,17 @@ input[type="search"] {
   margin-bottom: 15px;
 }
 
+.form-group-div {
+  img{
+    width: 290px;
+    height: 158px;
+  }
+
+  #cover_url{
+    position: absolute;
+    top:-10000px;
+  }
+}
 
 // Checkboxes and radios
 //

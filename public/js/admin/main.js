@@ -17,6 +17,7 @@ requirejs.config({
         // base modules
         bootstrap:'bootstrap.min',
         jquery: '//cdn.bootcss.com/jquery/2.1.4/jquery.min',
+        layer:'plugins/layer/layer',
         underscore: 'underscore-min',
         fastclick: 'fastclick.min',
         relocator: 'relocator-1.0.1.min',
@@ -43,6 +44,10 @@ requirejs.config({
 　　　　 underscore:{
             exports: '_'
 　　　　 },
+        layer:{
+            exports: 'layer',
+            deps: ['plugins/validator.js/i18n/zh_CN']
+        },
         plupload: {
             exports: 'plupload'
         },

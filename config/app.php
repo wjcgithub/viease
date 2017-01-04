@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://rongyouyuan.manmanshenghuo.com',
+    'url' => env('APP_URL', ''),
 
     /*
     |--------------------------------------------------------------------------
