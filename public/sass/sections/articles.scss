@@ -35,6 +35,7 @@ $preview-item-height: 120px;
             background: #eee;
             color: #666;
             text-align: center;
+            background-size: 291px 158px;
         }
 
         .article-preview-item-title {
@@ -55,10 +56,20 @@ $preview-item-height: 120px;
             padding-right: 15px;
         }
 
+      .article-preview-item-thumb-img{
+          width: 77.78px;
+          height: 76px;
+          img{
+              width: 77.78px;
+              height: 76px;
+          }
+      }
+
         .article-preview-item-thumb-placeholder {
             display: inline-flex;
             width: 78px;
             background-color: #eee;
+            background-size: 77.78px 76px;
 
             .inner {
                 line-height: 78px;
@@ -100,5 +111,9 @@ $preview-item-height: 120px;
             border: 1px dashed #ccc;
             font-size: 24px;
         }
+    }
+
+    .active{
+        border: 2px solid #43b548;
     }
 }

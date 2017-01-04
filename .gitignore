@@ -12,4 +12,6 @@ Homestead.yaml
 sftp-config.json
 .idea
 /vendor/
-materials
+/public/materials/
+/public/ueditor/
+/docs/
