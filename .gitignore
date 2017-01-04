@@ -1,6 +1,7 @@
 .phpintel/
 *storage/framework/session/*
 storage/logs/laravel.log
+storage/debugbar
 composer.lock
 .env
 .DS_Store
@@ -11,3 +12,6 @@ Homestead.yaml
 sftp-config.json
 .idea
 /vendor/
+/public/materials/
+/public/ueditor/
+/docs/
