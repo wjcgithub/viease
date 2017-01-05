@@ -34,9 +34,13 @@ class MaterialObserver
 
     public function created(Material $material)
     {
+        Log::info('created事件触发完成：'.json_encode($material));
         //artile类型不可放到监听中
         if ($material->type != 'article' && !$material->original_id && $material->parent_id) {
             Log::info('查询original_id：'.'obj is'.json_encode($material));
+            $material->original_id = $this->materialService->postToRemote($material);
+        }else{
+            Log::info('上传缩略图：'.'obj is'.json_encode($material));
             $material->original_id = $this->materialService->postToRemote($material);
         }
     }
