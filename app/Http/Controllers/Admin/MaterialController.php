@@ -7,6 +7,7 @@ use App\Http\Requests\Material\VideoRequest;
 use App\Http\Requests\Material\voiceRequest;
 use App\Repositories\MaterialRepository;
 use App\Http\Controllers\Controller;
+use App\Services\CurentWex;
 use Illuminate\Http\Request;
 use App\Models\Account;
 
@@ -44,6 +45,9 @@ class MaterialController extends Controller
      */
     public function getIndex()
     {
+        $material = CurentWex::getWex()->material;
+        $result = $material->uploadImage("/home/wwwroot/laravel/viease/public/image/getheadimg.jpg");  // 请使用绝对路径写法！除非你正确的理解了相对路径（好多人是没理解对的）！
+        var_dump($result);
         return admin_view('material.index');
     }
 

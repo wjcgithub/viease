@@ -39,7 +39,7 @@
                     <label>封面<small>（小图片建议尺寸：200像素 * 200像素）</small></label>
                     <div>
                         {{--<button type="button" class="btn btn-light">上传</button>--}}
-                        <input type="hidden" value="">
+                        <input type="input" name="cover_url" id="cover_url" value="">
                         <button type="button" class="btn btn-open-imglib btn-light">从图片库选择</button>
                         <label>
                             <input type="checkbox" name="show_cover_pic" value="" class="js-switch" data-size="small">
@@ -69,15 +69,12 @@
         </div>
     </div>
 </div>
+<div id="current_"></div>
 
 <script type="text/template" id="preview-item-template">
     <div class="article-preview-item deleteable">
         <div class="article-preview-item-thumb-title attr-title"><%= item.title || '标题' %></div>
-        <% if (item['cover_url']) { %>
         <div class="article-preview-item-thumb-img"><img src="<%= item.cover_url %>" alt="<%= item.title %>"></div>
-        <% } else { %>
-        <div class="article-preview-item-thumb-placeholder"><div class="inner">缩略图</div></div>
-        <% } %>
         <div class="article-preview-item-edit-links"><a href="javascript:;" class="edit"><i class="ion-edit"></i></a><a href="javascript:;" class="delete"><i class="ion-trash-a"></i></a></div>
     </div>
 </script>
