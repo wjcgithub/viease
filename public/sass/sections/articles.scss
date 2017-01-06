@@ -2,9 +2,9 @@ $preview-item-first-height: 160px;
 $preview-item-height: 120px;
 
 .article-form {
-    padding:20px;
+    padding: 20px;
     background: #f4f5f9;
-    border:1px solid #e7e7eb;
+    border: 1px solid #e7e7eb;
 }
 
 .articles-preview-container {
@@ -30,7 +30,7 @@ $preview-item-height: 120px;
             top: 0;
             left: 0;
             right: 0;
-            border:0;
+            border: 0;
             line-height: $preview-item-first-height;
             background: #eee;
             color: #666;
@@ -46,7 +46,7 @@ $preview-item-height: 120px;
             height: 28px;
             line-height: 28px;
             padding: 0 10px;
-            background-color: rgba(0,0,0,0.6);
+            background-color: rgba(0, 0, 0, 0.6);
             color: #fff;
         }
 
@@ -56,14 +56,14 @@ $preview-item-height: 120px;
             padding-right: 15px;
         }
 
-      .article-preview-item-thumb-img{
-          width: 77.78px;
-          height: 76px;
-          img{
-              width: 77.78px;
-              height: 76px;
-          }
-      }
+        .article-preview-item-thumb-img {
+            width: 77.78px;
+            height: 76px;
+            img {
+                width: 77.78px;
+                height: 76px;
+            }
+        }
 
         .article-preview-item-thumb-placeholder {
             display: inline-flex;
@@ -80,16 +80,16 @@ $preview-item-height: 120px;
         }
 
         .article-preview-item-edit-links {
-            position:absolute;
-            display:none;
+            position: absolute;
+            display: none;
             top: -1px;
             left: -1px;
             right: -1px;
-            bottom:0;
+            bottom: 0;
             background: rgba(255, 255, 255, 0.6);
             color: #000;
             line-height: $preview-item-height;
-            border:1px solid #999;
+            border: 1px solid #999;
             font-size: 24px;
             text-align: center;
             transition: all 3s;
@@ -100,7 +100,7 @@ $preview-item-height: 120px;
         }
 
         &:hover .article-preview-item-edit-links {
-            display:block;
+            display: block;
         }
 
         .add-new-item {
@@ -113,7 +113,221 @@ $preview-item-height: 120px;
         }
     }
 
-    .active{
+    .active {
         border: 2px solid #43b548;
     }
+}
+
+#wex-preview {
+    display: none;
+}
+
+.wx_phone_preview {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -365px;
+    margin-left: -180px;
+    z-index: 9997;
+    width: 360px;
+    height: 680px;
+    background: url('/image/wx_phone_preview_z3118ec.png') 0 0 no-repeat;
+
+    .btn_phone_preview_closed {
+        position: absolute;
+        left: -138px;
+        bottom: 90px;
+        .btn_phone_preview_closed, .btn_wx_phone_preview {
+            padding: 0;
+            min-width: 120px;
+        }
+    }
+
+    .wx_phone {
+        padding: 84px 56px 0 17px;
+
+        .wx_phone_hd {
+            text-align: center;
+            color: #fff;
+            line-height: 38px;
+            height: 38px;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-wrap: normal;
+            padding: 0 20px;
+        }
+
+        .wx_phone_bd {
+            position: relative;
+            overflow: auto;
+            background-color: #fff;
+            height: 470px;
+
+            .wx_phone_preview_appmsg {
+                padding: 15px 10px;
+
+                .appmsg_wap {
+
+                    .rich_media_title {
+                        margin-bottom: 12px;
+                        line-height: 1.4;
+                        font-weight: 400;
+                        font-size: 16px;
+                    }
+
+                    .rich_media_meta_list {
+                        margin-bottom: 18px;
+                        line-height: 20px;
+                        font-size: 0;
+
+                        .rich_media_meta_text {
+                            color: #8c8c8c;
+                            font-weight: 400;
+                            font-style: normal;
+                        }
+
+                        .rich_media_meta {
+                            display: inline-block;
+                            vertical-align: middle;
+                            margin-right: 8px;
+                            margin-bottom: 10px;
+                            font-size: 14px;
+                        }
+
+                    }
+
+                    .rich_media_meta_link {
+                        color: #607fa6;
+                        cursor: pointer;
+                    }
+
+                    .rich_media_meta {
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-right: 8px;
+                        margin-bottom: 10px;
+                        font-size: 14px;
+                    }
+
+                    .rich_media_thumb_wrp {
+                        margin-bottom: 6px;
+
+                        .appmsg_wap .rich_media_thumb {
+                            display: block;
+                            width: 100%;
+                        }
+                    }
+
+                    .rich_media_content {
+                        overflow: hidden;
+                        color: #3e3e3e;
+                        word-wrap: break-word;
+                        word-break: break-all;
+
+                        p {
+                            clear: both;
+                            min-height: 1em;
+                            white-space: pre-wrap;
+                        }
+
+                        * {
+                            max-width: 100% !important;
+                            box-sizing: border-box !important;
+                            -webkit-box-sizing: border-box !important;
+                            word-wrap: break-word !important;
+                            word-break: normal !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .wx_view_container {
+        .wx_view_list {
+            line-height: 40px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            text-align: center;
+            overflow: hidden;
+            position: absolute;
+            right: 105%;
+            top: 90px;
+
+            .wx_view_item {
+                background-color: #f0eff4;
+                border-bottom: 1px solid #dfdfe4;
+                white-space: nowrap;
+                cursor: pointer;
+                min-width: 120px;
+            }
+        }
+
+        .wx_article_crtl {
+            line-height: 40px;
+            border-radius: 5px;
+            position: absolute;
+            right: 105%;
+            top: 268px;
+            background-color: #fff;
+            min-width: 120px;
+            overflow: hidden;
+
+            .crtl_btn {
+                width: 50%;
+                float: left;
+                box-sizing: border-box;
+                padding: 0 8px;
+                line-height: 40px;
+                text-align: center;
+                cursor: pointer;
+            }
+        }
+
+        .btn_wx_phone_preview_wrp {
+            position: absolute;
+            bottom: 130px;
+            text-align: center;
+            left: -138px;
+
+            .btn_phone_preview_closed, .btn_wx_phone_preview {
+                padding: 0;
+                min-width: 120px;
+            }
+        }
+    }
+
+    .btn {
+        display: inline-block;
+        overflow: visible;
+        padding: 0 22px;
+        height: 30px;
+        line-height: 30px;
+        vertical-align: middle;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        font-size: 14px;
+        border-width: 1px;
+        border-style: solid;
+        cursor: pointer;
+        min-width: 60px;
+    }
+
+    .btn_default {
+        background-color: #fff;
+        background-image: -moz-linear-gradient(top,#fff 0,#fff 100%);
+        background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#fff));
+        background-image: -webkit-linear-gradient(top,#fff 0,#fff 100%);
+        background-image: -o-linear-gradient(top,#fff 0,#fff 100%);
+        background-image: linear-gradient(to bottom,#fff 0,#fff 100%);
+        border-color: #e7e7eb;
+        color: #222;
+    }
+
 }
