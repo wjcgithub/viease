@@ -23,6 +23,10 @@
             <form action="" method="POST" role="form" class="article-form">
                 <div class="form-group">
                     <label>标题</label>
+                    <div class="alert alert-warning alert-dismissible article-title" role="alert" style="display: none">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Warning!</strong> 请添加文章标题
+                    </div>
                     <input type="text" name="title" id="input" class="form-control" value="" required="required"  title="">
                 </div>
                 <div class="form-group">
@@ -36,6 +40,10 @@
                 </div>
 
                 <div class="form-group form-group-div">
+                    <div class="alert alert-warning alert-dismissible article-cover_url" role="alert"  style="display: none">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Warning!</strong> 请选择一个封面
+                    </div>
                     <label>封面<small>（小图片建议尺寸：200像素 * 200像素）</small></label>
                     <div>
                         {{--<button type="button" class="btn btn-light">上传</button>--}}
@@ -50,7 +58,11 @@
                 </div>
 
                 <div class="form-group">
-                    <label>正文<small></small></label>
+                    <div class="alert alert-warning alert-dismissible article-content" role="alert"  style="display: none">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Warning!</strong> 请编写文章内容
+                    </div>
+                    <label>文章内容<small></small></label>
                     <script id="container" name="content" style="width:100%;height:350px;" type="text/template"></script>
                 </div>
 
@@ -64,8 +76,9 @@
             <hr>
             <input type="hidden" name="cover_media_id">
             <input type="hidden" name="cover_url">
-            <button type="submit" class="btn btn-primary">保 存</button>
-            <button type="submit" class="btn btn-default">预 览</button>
+            <button type="submit" class="btn btn-primary btn-save">保 存</button>
+            <button type="submit" class="btn btn-default btn-preview">预 览</button>
+            <button type="submit" class="btn btn-default btn-save-send btn-success">保存并发送</button>
         </div>
     </div>
 </div>

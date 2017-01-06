@@ -33,6 +33,34 @@ define(['jquery', 'util', 'store'], function($, Util, Store){
 
         clean: function () {
             Store.set('articles', {});
+        },
+
+        add: function ($id) {
+            var $newItem = {
+                title:'',
+                author:'',
+                content:'',
+                cover_url:'',
+                description:'',
+                source_url:''
+            }
+
+            this.put($id, $newItem);
+        },
+
+        getLength: function () {
+            var o = this.all()
+            var t = typeof o;
+            if(t == 'string'){
+                return o.length;
+            }else if(t == 'object'){
+                var n = 0;
+                for(var i in o){
+                    n++;
+                }
+                return n;
+            }
+            return false;
         }
     };
 

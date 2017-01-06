@@ -69,24 +69,57 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','lay
         // 保存form
         function saveForm () {
             var $id = $('.article-preview-item.active').prop('id');
-            console.log('save-form');
             var $attributes = Util.parseForm($($form));
-            console.log($attributes);
             $attributes.content = $ue.getContent();
             Article.put($id, $attributes);
 
             previewItem($attributes);
         }
 
-        $form.on('keyup', saveForm);
-        $ue.addListener('keyup', saveForm);
+        function saveAll() {
+            //先保存当前激活的文章
+            saveForm();
 
+            //循环判断每一个
+            var $articles = Article.all();
+            $('.alert-warning').hide();
+            var validateNum=0;
+            console.log($articles.len);
+            for($id in $articles){
+                if($articles[$id].title==''){
+                    $("#"+$id).find('a.edit').click();
+                    scroll(0,0);
+                    $('.article-title').slideDown(1000);
+                    break;
+                }
+                if($articles[$id].cover_url==''){
+                    $("#"+$id).find('a.edit').click();
+                    scroll(0,0);
+                    $('.article-cover_url').slideDown(1000);
+                    break;
+                }
+                if($articles[$id].content==''){
+                    $("#"+$id).find('a.edit').click();
+                    scroll(0,0);
+                    $('.article-content').slideDown(1000);
+                    break;
+                }
+                validateNum++;
+            }
+            if(validateNum == Article.getLength()){
+                alert('保存成功')
+            }
+        }
+        
         // 添加项目
         $('.articles-preview-container').on('click', '.add-new-item', function(){
             var $parentItem = $(this).closest('.article-preview-item');
-            var $item = $($previewItemTemplate({item:{'cover_url':'/image/slt.png'}})).prop('id', (new Date).getTime());
+            var $id = (new Date).getTime();
+            var $item = $($previewItemTemplate({item:{'cover_url':'/image/slt.png'}})).prop('id', $id);
 
             $parentItem.before($item);
+
+            Article.add($id)
 
             performAddBtn();
         });
@@ -132,6 +165,10 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','lay
             }
             $firstItem.after($($previewItemTemplate({item: $articles[$id]})).prop('id', $id));
         }
+
+        $form.on('keyup', saveForm);
+        $ue.addListener('keyup', saveForm);
+        $('.btn-save').on('click', saveAll);
 
         /**
          * 弹出选择图片提示框
