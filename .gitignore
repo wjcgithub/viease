@@ -11,7 +11,9 @@ Homestead.yaml
 */.sass-cache
 sftp-config.json
 .idea
-/vendor/
+/vendor/*
+!/vendor/overtrue/laravel-ueditor/
 /public/materials/
 /public/ueditor/
+/public/uploads/
 /docs/

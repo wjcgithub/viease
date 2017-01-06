@@ -134,4 +134,15 @@ class UploadController extends Controller
 
         return $this->materialRepository->storeImage($this->account()->id, $resourceUrl);
     }
+
+    public function anyWexImg(Request $request)
+    {
+        if($request->hasFile('upfile')){
+            echo 1;
+        }else{
+            echo 2;
+        }
+
+        die;
+    }
 }

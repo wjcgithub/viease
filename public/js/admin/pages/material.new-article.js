@@ -6,6 +6,9 @@
 define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','layer'], function ($, Uploader, Util, Article) {
     $(function(){
         var $ue = UE.getEditor('container');
+        // ue.ready(function() {
+        //     ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
+        // });
         var $form = $('.article-form');
         var $previewItemTemplate = _.template($('#preview-item-template').html());
         var $firstItem = $('.article-preview-item.first');
