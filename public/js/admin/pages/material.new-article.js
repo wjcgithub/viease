@@ -6,13 +6,14 @@
 define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','layer'], function ($, Uploader, Util, Article) {
     $(function(){
         var $ue = UE.getEditor('container');
-        // ue.ready(function() {
-        //     ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
-        // });
         var $form = $('.article-form');
         var $previewItemTemplate = _.template($('#preview-item-template').html());
         var $firstItem = $('.article-preview-item.first');
-
+        $ue.ready(function() {
+            // $ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
+            // 初始化第一张图片
+            $firstItem.find('a.edit').click();
+        });
         //检查是否显示添加按钮
         function performAddBtn () {
             var $addBtnBox = $('.add-new-item').closest('.article-preview-item');
@@ -35,10 +36,7 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','lay
             }
 
             if ($attributes['content']) {
-                $ue.addListener("ready", function () {
-                    // editor准备好之后才可以使用
-                    $ue.setContent($attributes['content']);
-                });
+                $ue.setContent($attributes['content']);
             }else{
                 $ue.setContent('');
             }
@@ -70,11 +68,10 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','lay
 
         // 保存form
         function saveForm () {
-            console.log('save-form');
             var $id = $('.article-preview-item.active').prop('id');
+            console.log('save-form');
             var $attributes = Util.parseForm($($form));
             console.log($attributes);
-            console.log('ue-content:'+$ue.getContent());
             $attributes.content = $ue.getContent();
             Article.put($id, $attributes);
 
@@ -96,12 +93,14 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','lay
 
         // 编辑项目
         $('.articles-preview-container').on('click', 'a.edit', function(){
+
             var $item = $(this).closest('.article-preview-item');
 
             if ($item.hasClass('active')) { return; };
 
             var $article = Article.get($item.prop('id'));
-
+            console.log('form'+$item.prop('id')+"被编辑，内容为"+$article);
+            console.log($article);
             $item.addClass('active').siblings().removeClass('active');
 
             renderForm($article);
@@ -133,9 +132,6 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common','lay
             }
             $firstItem.after($($previewItemTemplate({item: $articles[$id]})).prop('id', $id));
         }
-
-        // 初始化第一张图片
-        $firstItem.find('a.edit').click();
 
         /**
          * 弹出选择图片提示框

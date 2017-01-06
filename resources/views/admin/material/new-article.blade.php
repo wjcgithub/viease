@@ -87,9 +87,7 @@
 
 @section('pre_js')
 <script>window.UEDITOR_HOME_URL = "/js/plugins/ueditor/";</script>
-<!--<script type="text/javascript" src="{{ asset('js/plugins/ueditor/ueditor.config.js') }}" async></script>-->
 <script type="text/javascript" src="{{ asset('js/plugins/ueditor/third-party/zeroclipboard/ZeroClipboard.js') }}"></script>
-<!--<script type="text/javascript" src="{{ asset('js/plugins/ueditor/ueditor.all.js') }}" async></script>-->
 @stop
 @section('js')
 <script>
