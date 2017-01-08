@@ -168,39 +168,22 @@ $preview-item-height: 120px;
             .wx_phone_preview_appmsg {
                 padding: 15px 10px;
 
-                .appmsg_wap {
+                .rich_media_title {
+                    margin-bottom: 12px;
+                    line-height: 1.4;
+                    font-weight: 400;
+                    font-size: 16px;
+                }
 
-                    .rich_media_title {
-                        margin-bottom: 12px;
-                        line-height: 1.4;
+                .rich_media_meta_list {
+                    margin-bottom: 18px;
+                    line-height: 20px;
+                    font-size: 0;
+
+                    .rich_media_meta_text {
+                        color: #8c8c8c;
                         font-weight: 400;
-                        font-size: 16px;
-                    }
-
-                    .rich_media_meta_list {
-                        margin-bottom: 18px;
-                        line-height: 20px;
-                        font-size: 0;
-
-                        .rich_media_meta_text {
-                            color: #8c8c8c;
-                            font-weight: 400;
-                            font-style: normal;
-                        }
-
-                        .rich_media_meta {
-                            display: inline-block;
-                            vertical-align: middle;
-                            margin-right: 8px;
-                            margin-bottom: 10px;
-                            font-size: 14px;
-                        }
-
-                    }
-
-                    .rich_media_meta_link {
-                        color: #607fa6;
-                        cursor: pointer;
+                        font-style: normal;
                     }
 
                     .rich_media_meta {
@@ -211,33 +194,192 @@ $preview-item-height: 120px;
                         font-size: 14px;
                     }
 
-                    .rich_media_thumb_wrp {
-                        margin-bottom: 6px;
+                }
 
-                        .appmsg_wap .rich_media_thumb {
-                            display: block;
-                            width: 100%;
-                        }
+                .rich_media_meta_link {
+                    color: #607fa6;
+                    cursor: pointer;
+                }
+
+                .rich_media_meta {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 8px;
+                    margin-bottom: 10px;
+                    font-size: 14px;
+                }
+
+                .rich_media_thumb_wrp {
+                    margin-bottom: 6px;
+
+                    .appmsg_wap .rich_media_thumb {
+                        display: block;
+                        width: 100%;
+                    }
+                }
+
+                .rich_media_content {
+                    overflow: hidden;
+                    color: #3e3e3e;
+                    word-wrap: break-word;
+                    word-break: break-all;
+
+                    p {
+                        clear: both;
+                        min-height: 1em;
+                        white-space: pre-wrap;
                     }
 
-                    .rich_media_content {
-                        overflow: hidden;
-                        color: #3e3e3e;
-                        word-wrap: break-word;
-                        word-break: break-all;
+                    * {
+                        max-width: 100% !important;
+                        box-sizing: border-box !important;
+                        word-wrap: break-word !important;
+                        word-break: normal !important;
+                    }
+                }
 
-                        p {
-                            clear: both;
-                            min-height: 1em;
+            }
+        }
+
+        .wx_phone_preview_card_wrp {
+            background-color: #f2f2f2;
+
+            .wx_phone_preview_multi_card {
+                padding: 15px;
+                cursor: pointer;
+
+                .msg_card_inner {
+                    border-radius: 3px;
+                    background-color: #fff;
+                    overflow: hidden;
+                    border: 1px solid #e7e7eb;
+
+                    .card_cover_appmsg_item {
+                        margin: 6px;
+                        position: relative;
+                    }
+
+                    .card_cover_appmsg_inner {
+                        position: relative;
+                        height: 140px;
+                        overflow: hidden;
+                        background-repeat: no-repeat;
+                        background-position: center center;
+                        background-size: cover;
+
+                        .card_cover_thumb{
+                            width: 239px;
+                            height: 120px;
+                        }
+                    }
+                }
+
+                .card_appmsg_item {
+                    overflow: hidden;
+                    padding: 6px;
+                    border-top: 1px solid #e7e7eb;
+
+                    .card_appmsg_content {
+                        overflow: hidden;
+                    }
+
+                    .card_appmsg_thumb {
+                        float: right;
+                        margin-left: 10px;
+                        width: 45px;
+                        height: 45px;
+                    }
+                }
+            }
+
+            .has_first_cover{
+                .card_cover_title {
+                    position: absolute;
+                    max-height: 42px;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    background: rgba(0,0,0,0.5)!important;
+                    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#80000000',endcolorstr = '#80000000');
+                    color: #fff;
+                    padding: 5px 6px;
+                }
+            }
+
+            .wx_phone_preview_card {
+                padding: 15px;
+                cursor: pointer;
+
+                .msg_card_inner {
+                    border-radius: 3px;
+                    background-color: #fff;
+                    overflow: hidden;
+                    border: 1px solid #e7e7eb;
+
+                    .msg_card_bd {
+                        padding: 8px;
+                        background-color: #fff;
+
+                        .msg_card_title {
+                            margin-bottom: 6px;
+                            max-height: 40px;
+                            font-size: 14px;
+                            overflow: hidden;
+                            font-weight: 400;
+                            font-style: normal;
+                            line-height: 1.2;
+                            word-wrap: normal;
                             white-space: pre-wrap;
                         }
 
-                        * {
-                            max-width: 100% !important;
-                            box-sizing: border-box !important;
-                            -webkit-box-sizing: border-box !important;
-                            word-wrap: break-word !important;
-                            word-break: normal !important;
+                        .msg_card_info {
+                            font-size: 13px;
+                            line-height: 20px;
+                            margin-bottom: 12px;
+                            color: #8d8d8d;
+                        }
+
+                        .msg_card_extra_info {
+                            height: 120px;
+                            overflow: hidden;
+                            background-repeat: no-repeat;
+                            background-position: center center;
+                            background-size: cover;
+                            margin: 14px 0 5px;
+
+                            .appmsg_thumb{
+                                width: 239px;
+                                height: 120px;
+                            }
+                        }
+
+                        .msg_card_desc {
+                            max-height: 42px;
+                            overflow: hidden;
+                            font-size: 12px;
+                            word-wrap: normal;
+                            white-space: pre-wrap;
+                        }
+                    }
+
+                    .msg_card_ft {
+                        background-color: #fff;
+                        line-height: 38px;
+                        padding: 0;
+                        margin: 0 8px;
+                        font-size: 12px;
+                        border-top: 1px solid #e7e7eb;
+
+                        .icon_arrow_default {
+                            float: right;
+                            margin-top: 10px;
+                            background: url('/image/base_z324410.png') 0 -2869px no-repeat;
+                            width: 16px;
+                            height: 15px;
+                            vertical-align: middle;
+                            display: inline-block;
+                            line-height: 300px;
+                            overflow: hidden;
                         }
                     }
                 }
@@ -249,8 +391,6 @@ $preview-item-height: 120px;
         .wx_view_list {
             line-height: 40px;
             border-radius: 5px;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
             text-align: center;
             overflow: hidden;
             position: absolute;
@@ -263,6 +403,11 @@ $preview-item-height: 120px;
                 white-space: nowrap;
                 cursor: pointer;
                 min-width: 120px;
+                &.selected {
+                    background-color: #47b54a;
+                    color: #fff;
+                    border-bottom-color: #5bab5e;
+                }
             }
         }
 
@@ -284,6 +429,14 @@ $preview-item-height: 120px;
                 line-height: 40px;
                 text-align: center;
                 cursor: pointer;
+                &.disabled {
+                    color: #a5a6aa;
+                    background-color: #e7e7eb;
+                }
+            }
+
+            .crtl_next_btn {
+                border-left: 1px solid #dfdfe4;
             }
         }
 
@@ -321,11 +474,11 @@ $preview-item-height: 120px;
 
     .btn_default {
         background-color: #fff;
-        background-image: -moz-linear-gradient(top,#fff 0,#fff 100%);
-        background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#fff));
-        background-image: -webkit-linear-gradient(top,#fff 0,#fff 100%);
-        background-image: -o-linear-gradient(top,#fff 0,#fff 100%);
-        background-image: linear-gradient(to bottom,#fff 0,#fff 100%);
+        background-image: -moz-linear-gradient(top, #fff 0, #fff 100%);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#fff));
+        background-image: -webkit-linear-gradient(top, #fff 0, #fff 100%);
+        background-image: -o-linear-gradient(top, #fff 0, #fff 100%);
+        background-image: linear-gradient(to bottom, #fff 0, #fff 100%);
         border-color: #e7e7eb;
         color: #222;
     }

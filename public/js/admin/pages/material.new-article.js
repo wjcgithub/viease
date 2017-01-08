@@ -149,9 +149,108 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             });
         }
 
+        //预览图文消息
+        function previewImgMsg(e) {
+            switchPreviewItem(e);
+
+            var $tmplate = _.template($('#wx-preview-mutilarticle-bd-template').html());
+            var articles = Util.reverseObject(Article.all());
+            var articleLength = Article.getLength();
+            if(articleLength>1){
+                //多图文消息preview
+                var articlesArr = new Array();
+                var i=0;
+                for (item in articles) {
+                    if(!isNaN(item)){
+                        articlesArr[i] = articles[item]
+                        i++;
+                    }
+                }
+                var articleHtml = $tmplate({
+                    firstTitle:articles['article-first'].title,
+                    coverUrl:articles['article-first'].cover_url,
+                    articlesArr:articlesArr});
+            }else{
+                //单图文消息preview
+                var $tmplate = _.template($('#wx-preview-article-bd-template').html());
+                var d = new Date();
+                var articles = Article.get('article-first');
+                articles.ctime = parseInt(d.getUTCMonth()+1)+'月'+d.getDate()+'日';
+                var articleHtml = $tmplate({item:articles});
+            }
+
+            $('.wx_name').text($('.current_wx_name .dropdown .dropdown-toggle').text());
+            $('.wx_phone_bd_replace').html(articleHtml);
+        }
+
+        //显示正文消息
+        function previewMsgBd(e) {
+            switchPreviewItem(e)
+            var $item = Article.get('article-first')
+            showArticle($item)
+            switchArticle();
+        }
+
+        //显示某个正文
+        function showArticle($item) {
+            var $tmplate = _.template($('#wx-phone-bd-template').html());
+            var d = new Date();
+            $item.ctime = d.getUTCFullYear()+'-'+parseInt(d.getUTCMonth()+1)+'-'+d.getDate();
+            $item.wxname=$('.current_wx_name .dropdown .dropdown-toggle').text();
+            var article = $tmplate($item);
+            $('.wx_phone_bd_replace').html(article);
+        }
+
+        //上一篇下一篇文章的切换
+        function switchArticle() {
+            //绑定上一篇,下一篇
+            $('.wx_phone_preview .wx_article_crtl .crtl_pre_btn').on('click', function (e){
+                if(!$(this).hasClass('disabled')){
+                    var key = Article.getPreById($('#currentArticle').val());
+                    if(key!=''){
+                        $('.wx_phone_preview .wx_article_crtl .crtl_next_btn').removeClass('disabled')
+                        $('#currentArticle').val(key)
+                        showArticle(Article.get(key))
+                    }else{
+                        $(this).addClass('disabled')
+                    }
+                }
+            });
+
+            $('.wx_phone_preview .wx_article_crtl .crtl_next_btn').on('click', function (e){
+                if(!$(this).hasClass('disabled')) {
+                    var key = Article.getNextById($('#currentArticle').val());
+                    console.log($('#currentArticle').val())
+                    if (key != '') {
+                        $('.wx_phone_preview .wx_article_crtl .crtl_pre_btn').removeClass('disabled')
+                        $('#currentArticle').val(key)
+                        showArticle(Article.get(key))
+                    } else {
+                        $(this).addClass('disabled')
+                    }
+                }
+            });
+        }
+
+        //切换预览按钮
+        function switchPreviewItem(e) {
+            if(e){
+                $(e.target).addClass('selected').siblings().removeClass('selected');
+                var articleLength = Article.getLength();
+                if(articleLength>1){
+                    $('.currentNum').val(articleLength)
+                    if($(e.target).hasClass('msgbd')){
+                        $('.wx_view_container .wx_article_crtl').slideDown(100);
+                    }else{
+                        $('.wx_view_container .wx_article_crtl').slideUp(100);
+                    }
+                }
+            }
+        }
+
+        //微信预览
         function wexPreview() {
             if(saveAll('preview')){
-
                 //示范一个公告层
                 layer.open({
                     type: 1
@@ -166,21 +265,25 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
                     ,
                     id: 'LAY_layuipro' //设定一个id，防止重复弹出
                     ,
-                    btn: ['火速围观', '残忍拒绝']
-                    ,
                     moveType: 1 //拖拽模式，0或者1
                     ,
-                    content: $('#wex-preview').html()
+                    content: (function (){
+                        return $('#wex-preview').html()
+                    })()
                     ,
                     success: function (layero) {
-                        var btn = layero.find('.layui-layer-btn');
-                        btn.css('text-align', 'center');
-                        btn.find('.layui-layer-btn0').attr({
-                            href: 'http://www.layui.com/'
-                            , target: '_blank'
-                        });
+                        // var btn = layero.find('.layui-layer-btn');
+                        // btn.css('text-align', 'center');
+                        // btn.find('.layui-layer-btn0').attr({
+                        //     href: 'http://www.layui.com/'
+                        //     , target: '_blank'
+                        // });
                     }
                 });
+                previewImgMsg();
+                //绑定图文消息
+                $('.wx_view_list .imgmsg').on('click', previewImgMsg);
+                $('.wx_view_list .msgbd').on('click', previewMsgBd);
             }
         }
 
@@ -234,6 +337,7 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
 
         //初始化除了第一张的其他图片
         for ($id in $articles) {
+            console.log($id)
             if ($id == 'article-first') {
                 continue;
             }

@@ -26,6 +26,7 @@ define(['jquery', 'repos/material', 'uploader', 'pager', 'admin/common'], functi
         var $imageUploader = Uploader.make('.upload-image', 'image', function(material, file){
             var $container = $containers['image'];
             var $template = $templates['image'];
+            console.log(material)
             $container.append($template(material));
         });
 

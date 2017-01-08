@@ -61,7 +61,44 @@ define(['jquery', 'util', 'store'], function($, Util, Store){
                 return n;
             }
             return false;
+        },
+
+        getNextById: function (id) {
+            if(id!=''){
+                var tmp='';
+                var next = '';
+                var articles = this.all();
+                var o = Util.reverseObject(articles);
+                for(var i in o){
+                    next=i;
+                    if(tmp=='yes'){
+                        return next;
+                    }
+                    if(i==id){
+                        tmp='yes';
+                    }
+                }
+            }
+            return '';
+        },
+        getPreById: function (id) {
+            if(id!=''){
+                var tmp='';
+                var pre = '';
+                var o = Util.reverseObject(this.all());
+                for(var i in o){
+                    if(i==id){
+                        break;
+                    }
+                    pre=i;
+                }
+
+                return pre;
+            }
+
+            return '';
         }
+
     };
 
     return $article;

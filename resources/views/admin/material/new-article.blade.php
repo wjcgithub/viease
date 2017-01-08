@@ -110,48 +110,24 @@
     <div id="wex-preview">
         <div class="wx_phone_preview">
             <div class="wx_phone">
-                <div class="wx_phone_hd">
+                <div class="wx_phone_hd wx_name">
                     王继超
                 </div>
-                <div class="wx_phone_bd">
-                    <div class="wx_phone_preview_appmsg appmsg_wap">
-                        <div class="rich_media">
-                            <div class="rich_media_area_primary">
-                                <h2 class="rich_media_title" title="那一年，你还记得吗">那一年，你还记得吗</h2>
-                                <div class="rich_media_meta_list">
-                                    <!-- <span class="rich_media_meta meta_original_tag dn">原创</span>
-                                    <a class="rich_media_meta meta_enterprise_tag" href="javascript:;"><img src="http://mmbiz.qpic.cn/mmbiz/sHCMyzurWv7hBXKI1vsotnuSWZxSu2QicqJy5ygBCWRSktDVbfnUrfg6A6fJIc8M0hORTWibPFKMHibKKMaBibQKTg/0"></a> -->
-                                    <em class="rich_media_meta rich_media_meta_text">2015-04-16</em>
-                                    <em class="rich_media_meta rich_media_meta_text"></em>
-                                    <span class="rich_media_meta rich_media_meta_link" title="请发送到手机查看完整效果">王继超</span>
-                                </div>
-
-                                <div class="rich_media_thumb_wrp">
-                                    <img src="http://mmbiz.qpic.cn/mmbiz/sHCMyzurWv7hBXKI1vsotnuSWZxSu2QicqJy5ygBCWRSktDVbfnUrfg6A6fJIc8M0hORTWibPFKMHibKKMaBibQKTg/0"
-                                         class="rich_media_thumb" onerror="this.parentNode.removeChild(this)">
-                                </div>
-
-                                <div class="rich_media_content">
-                                    <p>这个多雨的城市，留下了什么？你还记得吗？</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="wx_phone_bd wx_phone_bd_replace wx_phone_preview_card_wrp"></div>
             </div>
 
             <div class="wx_view_container jsPhoneViewPlugin">
                 <div>
                     <ul class="wx_view_list">
-                        <li class="wx_view_item jsPhoneViewLink" data-id="card">图文消息</li>
-                        <li class="wx_view_item jsPhoneViewLink selected" data-id="appmsg">消息正文</li>
+                        <li class="wx_view_item jsPhoneViewLink selected imgmsg" data-id="card">图文消息</li>
+                        <li class="wx_view_item jsPhoneViewLink msgbd" data-id="appmsg">消息正文</li>
                         <li class="wx_view_item jsPhoneViewLink" data-id="moments">分享到朋友圈</li>
                         <li class="wx_view_item jsPhoneViewLink" data-id="chat">发送给朋友</li>
                     </ul>
 
-                    <ul class="wx_article_crtl">
-                        <li class="crtl_btn crtl_pre_btn  jsPhoneViewCard" data-index="0">上一篇</li>
+                    <ul class="wx_article_crtl" style="display: none">
+                        <input type="hidden" id="currentArticle" value="article-first">
+                        <li class="crtl_btn crtl_pre_btn disabled  jsPhoneViewCard" data-index="0">上一篇</li>
                         <li class="crtl_btn crtl_next_btn  jsPhoneViewCard" data-index="2">下一篇</li>
                     </ul>
 
@@ -163,6 +139,85 @@
 
         </div>
     </div>
+
+    <script type="text/template" id="wx-phone-bd-template">
+        <div class="wx_phone_preview_appmsg appmsg_wap">
+            <div class="rich_media">
+                <div class="rich_media_area_primary">
+                    <h2 class="rich_media_title" title=""><%= title || '' %></h2>
+                    <div class="rich_media_meta_list">
+                        <!-- <span class="rich_media_meta meta_original_tag dn">原创</span>
+                        <a class="rich_media_meta meta_enterprise_tag" href="javascript:;">
+                            <img src="http://mmbiz.qpic.cn/mmbiz/sHCMyzurWv7hBXKI1vsotnuSWZxSu2QicqJy5ygBCWRSktDVbfnUrfg6A6fJIc8M0hORTWibPFKMHibKKMaBibQKTg/0">
+                        </a> -->
+                        <em class="rich_media_meta rich_media_meta_text"><%= ctime || '' %></em>
+                        <em class="rich_media_meta rich_media_meta_text"><%= author || '标题' %></em>
+                        <span class="rich_media_meta rich_media_meta_link" title="请发送到手机查看完整效果"><%= wxname || '' %></span>
+                    </div>
+
+<!--                    <% if (cover_url) { %>-->
+<!--                        <div class="rich_media_thumb_wrp">-->
+<!--                            <img src="<%= cover_url || '' %>" class="rich_media_thumb">-->
+<!--                        </div>-->
+<!--                    <% } %>-->
+
+                    <div class="rich_media_content">
+                        <%= content %>
+                    </div>
+
+                    <% if (source_url) { %>
+                        <div class="rich_media_tool">
+                            <a class="media_tool_meta meta_primary" href="<%= source_url %>" target="_blank">阅读原文</a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="wx-preview-mutilarticle-bd-template">
+        <div class="msg_card wx_phone_preview_multi_card has_first_cover">
+            <div class="msg_card_inner">
+                <div class="card_cover_appmsg_item jsPhoneViewCard" data-index="0">
+                    <div class="card_cover_appmsg_inner">
+                        <img class="card_cover_thumb" src="<%= coverUrl %>">
+                    </div>
+                    <strong class="card_cover_title" title=""><%= firstTitle %></strong>
+                </div>
+
+                <% _.each(articlesArr, function(n){ %>
+                    <div class="card_appmsg_item dn jsPhoneViewCard" data-index="0">
+                        <img class="card_appmsg_thumb" src="<%= n.cover_url %>">
+                        <div class="card_appmsg_content" title=""><%= n.title %></div>
+                    </div>
+                <% }); %>
+
+            </div>
+        </div>
+    </script>
+
+
+    <script type="text/template" id="wx-preview-article-bd-template">
+        <div class="msg_card wx_phone_preview_card jsPhoneViewCard" data-index="0">
+            <div class="msg_card_inner">
+                <div class="msg_card_bd">
+                    <h4 class="msg_card_title" title="<%= item.title %>"><%= item.title %></h4>
+                    <div class="msg_card_info">
+                        <%= item.ctime %>
+                    </div>
+
+                    <div class="msg_card_extra_info">
+                        <img class="appmsg_thumb" src="<%= item.cover_url %>">
+                    </div>
+
+                    <div class="msg_card_desc" title="<%= item.description %>"><%= item.description %></div>
+                </div>
+                <div class="msg_card_ft">
+                    <i class="icon_arrow_default"></i>阅读原文</div>
+            </div>
+        </div>
+    </script>
+
 
     <script type="text/template" id="preview-item-template">
         <div class="article-preview-item deleteable">

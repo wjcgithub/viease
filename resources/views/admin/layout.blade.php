@@ -84,7 +84,7 @@
                   </li>
               </ul>
               @if(!$global->accounts->isEmpty() && !empty($global->current_account))
-              <ul class="nav navbar-nav navbar-right">
+              <ul class="nav navbar-nav navbar-right current_wx_name">
                 <li class="dropdown">
                       <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                           @if($global->current_account) <i class="ion-chatbubble icon-md"></i>  {{ $global->current_account->name }} @endif

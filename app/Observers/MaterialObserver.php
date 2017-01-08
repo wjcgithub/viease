@@ -40,8 +40,8 @@ class MaterialObserver
             Log::info('查询original_id：'.'obj is'.json_encode($material));
             $material->original_id = $this->materialService->postToRemote($material);
         }else{
-            Log::info('上传缩略图：'.'obj is'.json_encode($material));
-            $material->original_id = $this->materialService->postToRemote($material);
+//            Log::info('上传缩略图：'.'obj is'.json_encode($material));
+//            $material->original_id = $this->materialService->postToRemote($material);
         }
     }
 }
