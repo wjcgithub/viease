@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Overtrue\Wechat\Media as MediaService;
 use App\Repositories\MaterialRepository;
+use Illuminate\Support\Facades\Log;
 
 /**
  * 素材服务.
@@ -123,7 +123,7 @@ class Material
     {
         $function = camel_case('post_remote_'.$material->type);
 
-        return $function($material);
+        return $this->$function($material);
     }
 
     /**
@@ -175,12 +175,16 @@ class Material
     {
         $filePath = $this->mediaUrlToPath($image->source_url);
 
-        $mediaService = new MediaService(
-            account()->getCurrent()->app_id,
-            account()->getCurrent()->app_secret
-        );
+        $wxApp = CurentWex::getWex();
+        $response = $wxApp->material->uploadImage($filePath);
 
-        return $mediaService->forever()->image($filePath);
+        return $response;
+    }
+
+    private function mediaUrlToPath($filepath){
+        $newPath = str_replace(config('app.url').config('material.image.prefix'),'',$filepath);
+        $localPath = config('material.image.storage_path').ltrim($newPath,'/');
+        return $localPath;
     }
 
     /**
@@ -450,4 +454,5 @@ class Material
     {
         return $this->materialRepository->getLocalMediaId($accountId, $mediaId);
     }
+
 }
