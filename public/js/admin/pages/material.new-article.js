@@ -76,6 +76,7 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             previewItem($attributes);
         }
 
+        //保存图文数据到本地缓存
         function saveAll(arg1) {
             if(!arguments[0]) arg1 = "check";
             //先保存当前激活的文章
@@ -113,6 +114,11 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             }
 
             return false;
+        }
+
+        //保存图文数据到数据库
+        function saveArticleToDb() {
+
         }
 
 
