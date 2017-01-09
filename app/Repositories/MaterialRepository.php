@@ -270,6 +270,8 @@ class MaterialRepository
 
         $model->source_url = $image['local_url'];
 
+        $model->remote_img_url = $image['url'];
+
         $model->save();
 
         return $model->media_id;

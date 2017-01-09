@@ -12,14 +12,14 @@ use EasyWeChat\Foundation\Application;
 
 class CurentWex
 {
-    static public function getWex()
+    static public function getWex($account=NULL)
     {
         $options = [
             'debug' => true,
-            'app_id' => account()->getCurrent()->app_id,
-            'secret' => account()->getCurrent()->app_secret,
-            'token' => account()->getCurrent()->token,
-            'aes_key' => account()->getCurrent()->aes_key,
+            'app_id' => empty($account) ? account()->getCurrent()->app_id : $account->app_id,
+            'secret' => empty($account) ? account()->getCurrent()->app_secret : $account->app_secret,
+            'token' => empty($account) ? account()->getCurrent()->token : $account->token,
+            'aes_key' => empty($account) ? account()->getCurrent()->aes_key : $account->aes_key,
             /**
              * 日志配置
              *

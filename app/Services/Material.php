@@ -175,8 +175,8 @@ class Material
     {
         $filePath = $this->mediaUrlToPath($image->source_url);
 
-        $wxApp = CurentWex::getWex();
-        $response = $wxApp->material->uploadImage($filePath);
+        $wxMaterial = CurentWex::getWex()->material;
+        $response = $wxMaterial->uploadImage($filePath);
 
         return $response;
     }
@@ -260,7 +260,7 @@ class Material
             return;
         }
 
-        $image['local_url'] = config('app.url').$this->downloadMaterial($account, 'image', $mediaId);
+        $image['local_url'] = config('app.url').$this->downloadMaterial($account, 'image', $mediaId, $image);
 
         return $this->materialRepository->storeWechatImage($account->id, $image);
     }
@@ -370,23 +370,20 @@ class Material
      *
      * @return mixed
      */
-    private function downloadMaterial($account, $type, $mediaId)
+    private function downloadMaterial($account, $type, $mediaId, $file=null)
     {
         $dateDir = date('Ym').'/';
 
         $dir = config('material.'.$type.'.storage_path').$dateDir;
 
-        $mediaService = new MediaService(
-            $account->app_id,
-            $account->app_secret
-        );
+        $wxMaterial = CurentWex::getWex($account)->material;
 
         $name = md5($mediaId);
 
         is_dir($dir) || mkdir($dir, 0755, true);
         //如果属于视频类型
         if ($type == 'video') {
-            $videoInfo = $mediaService->forever()->download($mediaId);
+            $videoInfo = $wxMaterial->get($mediaId);
             //取消下载Mp4文件
             return [
                 'title' => $videoInfo['title'],
@@ -395,13 +392,13 @@ class Material
                 'media_id' => $mediaId,
             ];
         } else {
-            $dirFilename = $mediaService->forever()->download($mediaId, $dir.$name);
+            $image = $wxMaterial->get($mediaId, $dir.$name);
 
-            $fileName = explode('/', $dirFilename);
+            $localImg = $dir.'/'.$name.'.jpg';
 
-            $fileName = array_pop($fileName);
+            file_put_contents($localImg, $image);
 
-            return config('material.'.$type.'.prefix').'/'.$dateDir.$fileName;
+            return $localImg;
         }
     }
 
@@ -416,12 +413,8 @@ class Material
      */
     private function getRemoteMaterialLists($account, $type, $offset, $count)
     {
-        $mediaService = new MediaService(
-            $account->app_id,
-            $account->app_secret
-        );
-
-        return $mediaService->lists($type, $offset, $count)['item'];
+        $wxMaterial = CurentWex::getWex($account)->material;
+        return $wxMaterial->lists($type, $offset, $count)['item'];
     }
 
     /**
@@ -434,12 +427,12 @@ class Material
      */
     private function getRemoteMaterialCount($account, $type)
     {
-        $mediaService = new MediaService(
-            $account->app_id,
-            $account->app_secret
-        );
-
-        return $mediaService->stats($type);
+        $wxMaterial = CurentWex::getWex($account)->material;
+        $response = $wxMaterial->stats($type);
+        if(!empty($response)){
+            $countObj = json_decode($response,true);
+            return $countObj[$type."_count"];
+        }
     }
 
     /**

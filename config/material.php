@@ -12,7 +12,7 @@ return [
      */
     'image' => [
         // 存储目录
-        'storage_path'    => public_path('materials/images/'),
+        'storage_path'    => public_path('materials/images/'),   //需要和prefix一至
 
         // 图片最大大小
         'upload_max_size' => 1 * M, // 5M

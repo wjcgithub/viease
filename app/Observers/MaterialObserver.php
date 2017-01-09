@@ -34,7 +34,7 @@ class MaterialObserver
         if ($material->type != 'article' && !$material->original_id && $material->parent_id) {
             Log::info('查询original_id：'.'obj is'.json_encode($material));
             $material->original_id = $this->materialService->postToRemote($material);
-        }else if($material->type == 'image'){
+        }else if($material->type == 'image' && !$material->original_id){
             Log::info('observer - image：'.'obj is'.json_encode($material));
             $response = $this->materialService->postToRemote($material);
             Log::info('----wx----：'.'obj is'.json_encode($response));
