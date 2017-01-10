@@ -126,7 +126,8 @@ class MaterialController extends Controller
             $broadcast = CurentWex::getWex()->broadcast;
             $messageType = Broadcast::MSG_TYPE_NEWS;
             $media_id = 'sSUvROGbJHhPwch-6RuuqnPQcRBAjO6tDeEN6QpQOLw';
-            $broadcast->send($messageType, $media_id);
+            $openidArr = ['ob43SwB_v59vBhVkLpT0lQdYgQKk','ob43SwHjEhm8Ksd7gAEuqntLAiFY','ob43SwJdR_RCIfdFqfJYiGgxlybE'];
+            $broadcast->send($messageType, $media_id, $openidArr);
         }catch (\Exception $e){
             Log::info($e->getTraceAsString());
         }
