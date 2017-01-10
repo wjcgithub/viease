@@ -48,7 +48,7 @@ class Server
      */
     public function make($account)
     {
-        $server = CurentWex::getWex($account)->serve;
+        $server = CurentWex::getWex($account)->server;
 
         $server->setMessageHandler(function ($message) {
             // $message->FromUserName // 用户的 openid
