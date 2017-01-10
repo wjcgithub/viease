@@ -451,7 +451,7 @@ class MaterialRepository
             $this->savePost($article);
         }
 
-        return $firstArticle->original_id;
+        return $obj->media_id;
     }
 
     /**
