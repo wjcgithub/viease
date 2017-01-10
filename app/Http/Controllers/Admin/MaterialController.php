@@ -9,6 +9,7 @@ use App\Models\Material;
 use App\Repositories\MaterialRepository;
 use App\Http\Controllers\Controller;
 use App\Services\CurentWex;
+use EasyWeChat\Broadcast\Broadcast;
 use EasyWeChat\Support\Log;
 use Illuminate\Http\Request;
 use App\Models\Account;
@@ -122,9 +123,10 @@ class MaterialController extends Controller
     public function postNewArticle(ArticleRequest $request)
     {
         try{
-        CurentWex::getWex()->server->setMessageHandler(function ($message){
-            return new \EasyWeChat\Material\Material('mpnews', 'sSUvROGbJHhPwch-6RuuqnPQcRBAjO6tDeEN6QpQOLw');
-        });
+            $broadcast = CurentWex::getWex()->broadcast;
+            $messageType = Broadcast::MSG_TYPE_NEWS;
+            $media_id = 'sSUvROGbJHhPwch-6RuuqnPQcRBAjO6tDeEN6QpQOLw';
+            $broadcast->send($messageType, $media_id);
         }catch (\Exception $e){
             Log::info($e->getTraceAsString());
         }
