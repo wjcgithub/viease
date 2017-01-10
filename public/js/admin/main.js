@@ -17,6 +17,7 @@ requirejs.config({
         // base modules
         bootstrap:'bootstrap.min',
         jquery: '//cdn.bootcss.com/jquery/2.1.4/jquery.min',
+        jqueryWeui:'//cdn.bootcss.com/jquery-weui/1.0.0/js/jquery-weui.min',
         layer:'plugins/layer/layer',
         underscore: 'underscore-min',
         fastclick: 'fastclick.min',
@@ -45,6 +46,10 @@ requirejs.config({
             exports: '_'
 　　　　 },
         layer:{
+            exports: 'layer',
+            deps: ['plugins/validator.js/i18n/zh_CN']
+        },
+        jqueryWeui:{
             exports: 'layer',
             deps: ['plugins/validator.js/i18n/zh_CN']
         },

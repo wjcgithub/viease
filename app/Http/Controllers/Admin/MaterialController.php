@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Material\ArticleRequest;
 use App\Http\Requests\Material\VideoRequest;
 use App\Http\Requests\Material\voiceRequest;
+use App\Models\Material;
 use App\Repositories\MaterialRepository;
 use App\Http\Controllers\Controller;
 use App\Services\CurentWex;
+use EasyWeChat\Support\Log;
 use Illuminate\Http\Request;
 use App\Models\Account;
 
@@ -45,9 +47,6 @@ class MaterialController extends Controller
      */
     public function getIndex()
     {
-//        $material = CurentWex::getWex()->material;
-//        $result = $material->uploadImage("/home/wwwroot/laravel/viease/public/image/getheadimg.jpg");  // 请使用绝对路径写法！除非你正确的理解了相对路径（好多人是没理解对的）！
-//        var_dump($result);
         return admin_view('material.index');
     }
 
@@ -122,7 +121,16 @@ class MaterialController extends Controller
      */
     public function postNewArticle(ArticleRequest $request)
     {
-        return $this->materialRepository->storeArticle($request->get('article'));
+        try{
+        CurentWex::getWex()->server->setMessageHandler(function ($message){
+            return new \EasyWeChat\Material\Material('mpnews', 'sSUvROGbJHhPwch-6RuuqnPQcRBAjO6tDeEN6QpQOLw');
+        });
+        }catch (\Exception $e){
+            Log::info($e->getTraceAsString());
+        }
+        die;
+        $rest = $this->materialRepository->storeArticle($this->account()->id,$request->get('article'),NULL,Material::CREATED_FROM_SELF);
+        return response(['media_id'=>$rest]);
     }
 
     /**

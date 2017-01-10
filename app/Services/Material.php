@@ -398,7 +398,7 @@ class Material
 
             file_put_contents($localImg, $image);
 
-            return $localImg;
+            return str_replace(base_path(),'',$localImg);
         }
     }
 

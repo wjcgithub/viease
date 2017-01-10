@@ -3,7 +3,7 @@
  *
  * @author overtrue <anzhengchao@gmail.com>
  */
-define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'layer'], function ($, Uploader, Util, Article) {
+define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'layer', 'jqueryWeui'], function ($, Uploader, Util, Article) {
     $(function () {
         var $ue = UE.getEditor('container');
         var $form = $('.article-form');
@@ -70,6 +70,12 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
         function saveForm() {
             var $id = $('.article-preview-item.active').prop('id');
             var $attributes = Util.parseForm($($form));
+            if($attributes.show_cover_pic==''){
+                $attributes.show_cover_pic=1;
+            }else{
+                $attributes.show_cover_pic=0;
+            }
+            console.log($attributes)
             $attributes.content = $ue.getContent();
             Article.put($id, $attributes);
 
@@ -108,7 +114,7 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             }
             if (validateNum == Article.getLength()) {
                 if(typeof arg1 == 'object'){
-                    alert('保存成功')
+                    $.toptip('保存成功', 'success');
                 }
                 return true;
             }
@@ -120,7 +126,6 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
         function saveArticleToDb() {
 
         }
-
 
         /**
          * 弹出选择图片提示框
@@ -144,8 +149,10 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
 
                     //设置图片
                     var imagePath = body.find(".chose_icon").attr("src");
+                    var original_id = body.find(".chose_icon").attr("data");
                     //设置input值
                     $('.form-group-div').find('input[name=cover_url]').val(imagePath);
+                    $('.form-group-div').find('input[name=cover_media_id]').val(original_id);
                     layer.closeAll()
                     saveForm();
                 },
@@ -293,34 +300,39 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             }
         }
 
+        //保存并发送文章
+        function wexSaveSend() {
+            if (saveAll('preview')) {
+                var articles = Util.reverseObject(Article.all());
+                var data = new Array();a={'article':articles}
+                Util.request('post','material/new-article',a,function (){
+                    success('保存成功');
+                }, function (){
+                    error('保存失败,请重试!');
+                })
+            }
+        }
+
         // 添加项目
         $('.articles-preview-container').on('click', '.add-new-item', function () {
             var $parentItem = $(this).closest('.article-preview-item');
             var $id = (new Date).getTime();
             var $item = $($previewItemTemplate({item: {'cover_url': '/image/slt.png'}})).prop('id', $id);
-
             $parentItem.before($item);
-
             Article.add($id)
-
             performAddBtn();
         });
 
         // 编辑项目
         $('.articles-preview-container').on('click', 'a.edit', function () {
-
             var $item = $(this).closest('.article-preview-item');
-
             if ($item.hasClass('active')) {
                 return;
             }
-            ;
-
             var $article = Article.get($item.prop('id'));
             console.log('form' + $item.prop('id') + "被编辑，内容为" + $article);
             console.log($article);
             $item.addClass('active').siblings().removeClass('active');
-
             renderForm($article);
         });
 
@@ -356,8 +368,10 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
 
         $form.on('keyup', saveForm);
         $ue.addListener('keyup', saveForm);
+        $('input[name=show_cover_pic]').on('click', saveForm);
         $('.btn-save').on('click', saveAll);
         $('.btn-preview').on('click', wexPreview);
+        $('.btn-save-send').on('click', wexSaveSend);
 
         $('.btn-open-imglib').on('click', function () {
             showChoseImageDialog("", "/admin/material/imglib");

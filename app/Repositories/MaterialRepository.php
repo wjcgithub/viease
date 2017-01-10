@@ -3,6 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Material;
+use App\Services\CurentWex;
+use EasyWeChat\Message\Article;
+use Illuminate\Support\Facades\Log;
 
 class MaterialRepository
 {
@@ -362,24 +365,29 @@ class MaterialRepository
         $createdFrom = Material::CREATED_FROM_WECHAT,
         $canEdited = Material::CAN_EDITED
         ) {
+        try{
+            //判断多个与单个
+            if (count($articles) >= 2) {
+                $result = $this->storeMultiArticle(
+                    $accountId,
+                    $articles,
+                    $originalMediaId,
+                    $createdFrom,
+                    $canEdited
+                );
+            } else {
+                $result = $this->storeSimpleArticle(
+                    $accountId,
+                    array_shift($articles),
+                    $originalMediaId,
+                    $createdFrom,
+                    $canEdited
+                );
+            }
 
-        //判断多个与单个
-        if (count($articles) >= 2) {
-            return $this->storeMultiArticle(
-                $accountId,
-                $articles,
-                $originalMediaId,
-                $createdFrom,
-                $canEdited
-            );
-        } else {
-            return $this->storeSimpleArticle(
-                $accountId,
-                array_shift($articles),
-                $originalMediaId,
-                $createdFrom,
-                $canEdited
-            );
+            return $result;
+        }catch (\Exception $e){
+            Log::error('上传图文素材失败==='.$e->getMessage().'======'.$e->getTraceAsString());
         }
     }
 
@@ -401,14 +409,34 @@ class MaterialRepository
         $createdFrom,
         $canEdited)
     {
+        $wxarticles=[];
+        foreach ($articles as $article){
+            $wxarticles[] = new Article([
+                'title'=>$article['title'],
+                'thumb_media_id'=>$article['cover_media_id'],
+                'author'=>$article['author'],
+                'digest'=>$article['description'],
+                'show_cover_pic'=>1,
+                'content'=>$article['content'],
+                'content_source_url'=>$article['source_url'],
+            ]);
+        }
+
+        //push to wx
+        $material = CurentWex::getWex()->material;
+        $response = $material->uploadArticle($wxarticles);
+        $obj = json_decode($response);
+
         $firstData = array_shift($articles);
 
         $firstData['type'] = 'article';
         $firstData['can_edited'] = $canEdited;
-        $firstData['original_id'] = $originalMediaId;
+        $firstData['original_id'] = $obj->media_id;
         $firstData['created_from'] = $createdFrom;
         $firstData['parent_id'] = 0;
         $firstData['account_id'] = $accountId;
+        $firstData['show_cover_pic'] = 1;
+        $firstData['digest'] = $firstData['description'];
 
         $firstArticle = $this->savePost($firstData);
 
@@ -418,10 +446,12 @@ class MaterialRepository
             $article['can_edited'] = $canEdited;
             $article['account_id'] = $accountId;
             $article['parent_id'] = $firstArticle->id;
+            $article['show_cover_pic'] = 1;
+            $article['digest'] = $firstData['description'];
             $this->savePost($article);
         }
 
-        return $firstArticle->media_id;
+        return $firstArticle->original_id;
     }
 
     /**
@@ -483,7 +513,7 @@ class MaterialRepository
 
         $article->show_cover_pic = $showCover;
 
-        $article->cover_media_id = $input['thumb_media_id'];
+        $article->cover_media_id = $input['cover_media_id'];
 
         $article->fill($input);
 
@@ -500,9 +530,9 @@ class MaterialRepository
      */
     private function fillSavePost($article, $input)
     {
-        $account->fill($input);
+        $article->fill($input);
 
-        return $account->save();
+        return $article->save();
     }
 
     /**

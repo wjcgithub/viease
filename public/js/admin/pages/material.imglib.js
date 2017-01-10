@@ -31,7 +31,7 @@ define(['jquery', 'jqpager', 'layer'], function ($) {
                     for(var i=0;i<data['data'].length;i++) {
                         content +=
                             '<div class="imglist " style="margin-left:10px;margin-top:10px;float:left;position:relative">'+
-                            '<img src ="'+data['data'][i]['source_url']+'" width="100px" height="100px" class="thisimg" onclick="selectImg(this)">'+
+                            '<img src="'+data['data'][i]['source_url']+'" data="'+data['data'][i]['original_id']+'" width="100px" height="100px" class="thisimg" onclick="selectImg(this)">'+
                             ' </div>';
                     }
                     content += '</div>';

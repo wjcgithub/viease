@@ -12,7 +12,7 @@
     <!--BEGIN CONTENT-->
     <div class="page-content">
 
-        <div id="table-action" class="row ">
+        <div id="table-action" class="row">
             <div class="imgbox">
                 <div class="form-group">
                     <input type="hidden" />

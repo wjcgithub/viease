@@ -52,8 +52,9 @@
                     <div class="form-group form-group-div">
                         <div class="alert alert-warning alert-dismissible article-cover_url" role="alert"
                              style="display: none">
-                            <button type="button" class="close" data-dismiss="alert"><span
-                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
                             <strong>Warning!</strong> 请选择一个封面
                         </div>
                         <label>封面
@@ -61,7 +62,8 @@
                         </label>
                         <div>
                             {{--<button type="button" class="btn btn-light">上传</button>--}}
-                            <input type="input" name="cover_url" id="cover_url" value="">
+                            <input type="input" name="cover_url" class="remote_ele" id="cover_url" value="">
+                            <input type="input" name="cover_media_id" class="remote_ele" id="cover_media_id" value="">
                             <button type="button" class="btn btn-open-imglib btn-light">从图片库选择</button>
                             <label>
                                 <input type="checkbox" name="show_cover_pic" value="" class="js-switch"
@@ -231,6 +233,8 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('js/plugins/ueditor/themes/viease/css/ueditor.css') }}">
 <link rel="stylesheet" href="{{ asset('js/plugins/layer/skin/default/layer.css') }}">
+<link rel="stylesheet" href="http://cdn.bootcss.com/weui/1.1.0/style/weui.min.css">
+<link rel="stylesheet" href="http://cdn.bootcss.com/jquery-weui/1.0.0/css/jquery-weui.min.css">
 @stop
 
 @section('pre_js')
