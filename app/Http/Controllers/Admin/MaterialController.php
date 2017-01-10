@@ -123,15 +123,15 @@ class MaterialController extends Controller
     public function postNewArticle(ArticleRequest $request)
     {
         try{
-            $broadcast = CurentWex::getWex()->broadcast;
-            $messageType = Broadcast::MSG_TYPE_NEWS;
-            $media_id = 'sSUvROGbJHhPwch-6RuuqnPQcRBAjO6tDeEN6QpQOLw';
-            $openidArr = ['ob43SwB_v59vBhVkLpT0lQdYgQKk','ob43SwHjEhm8Ksd7gAEuqntLAiFY','ob43SwJdR_RCIfdFqfJYiGgxlybE'];
-            $broadcast->send($messageType, $media_id, $openidArr);
+//            $broadcast = CurentWex::getWex()->broadcast;
+//            $messageType = Broadcast::MSG_TYPE_NEWS;
+//            $media_id = 'sSUvROGbJHhPwch-6RuuqnPQcRBAjO6tDeEN6QpQOLw';
+//            $openidArr = ['ob43SwB_v59vBhVkLpT0lQdYgQKk','ob43SwHjEhm8Ksd7gAEuqntLAiFY','ob43SwJdR_RCIfdFqfJYiGgxlybE'];
+//            $broadcast->send($messageType, $media_id, $openidArr);
         }catch (\Exception $e){
             Log::info($e->getTraceAsString());
         }
-        die;
+//        die;
         $rest = $this->materialRepository->storeArticle($this->account()->id,$request->get('article'),NULL,Material::CREATED_FROM_SELF);
         return response(['media_id'=>$rest]);
     }
