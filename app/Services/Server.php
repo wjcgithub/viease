@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Overtrue\Wechat\Server as WechatServer;
 use App\Services\Message as MessageService;
 use App\Repositories\ReplyRepository;
 use Cache;
@@ -49,24 +48,43 @@ class Server
      */
     public function make($account)
     {
-        $appId = $account->app_id;
+        $server = CurentWex::getWex($account)->serve;
 
-        $token = $account->token;
-
-        $encodingAESKey = $account->aes_key;
-
-        $server = new WechatServer($appId, $token, $encodingAESKey);
-
-        $server->on('message', function ($message) use ($server, $account) {
-            return $this->handleMessage($account, $message, $server);
+        $server->setMessageHandler(function ($message) {
+            // $message->FromUserName // 用户的 openid
+            // $message->MsgType // 消息类型：event, text....
+            switch ($message->MsgType) {
+                case 'event':
+                    # 事件消息...
+                    break;
+                case 'text':
+                    # 文字消息...
+                    break;
+                case 'image':
+                    # 图片消息...
+                    break;
+                case 'voice':
+                    # 语音消息...
+                    break;
+                case 'video':
+                    # 视频消息...
+                    break;
+                case 'location':
+                    # 坐标消息...
+                    break;
+                case 'link':
+                    # 链接消息...
+                    break;
+                // ... 其它消息
+                default:
+                    # code...
+                    break;
+            }
+            return "您好！欢迎关注我!";
         });
 
-        //普通事件
-        $server->on('event', function ($event) use ($server, $account) {
-            return $this->handleEvent($account, $event, $server);
-        });
-
-        return $server->serve();
+        $response = $server->serve();
+        return $response;
     }
 
     /**
