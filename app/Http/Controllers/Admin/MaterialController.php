@@ -123,12 +123,12 @@ class MaterialController extends Controller
     public function postNewArticle(ArticleRequest $request)
     {
         try{
-//            $broadcast = CurentWex::getWex()->broadcast;
-//            $messageType = Broadcast::MSG_TYPE_NEWS;
-//            $media_id = 'sSUvROGbJHhPwch-6Ruuqq4wSlfx3EhwRHDjCO6Kp8Q';
-//            $openidArr = ['ob43SwB_v59vBhVkLpT0lQdYgQKk','ob43SwHjEhm8Ksd7gAEuqntLAiFY','ob43SwJdR_RCIfdFqfJYiGgxlybE'];
-//            $broadcast->send($messageType, $media_id, $openidArr);
-//            die;
+            $broadcast = CurentWex::getWex()->broadcast;
+            $messageType = Broadcast::MSG_TYPE_NEWS;
+            $media_id = 'sSUvROGbJHhPwch-6RuuqmSp9zwFjhVXIFCQRvtamAs';
+            $openidArr = ['ob43SwB_v59vBhVkLpT0lQdYgQKk','ob43SwHjEhm8Ksd7gAEuqntLAiFY','ob43SwJdR_RCIfdFqfJYiGgxlybE'];
+            $broadcast->send($messageType, $media_id, $openidArr);
+            die;
         }catch (\Exception $e){
             Log::info($e->getTraceAsString());
         }
