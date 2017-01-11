@@ -142,6 +142,7 @@
         </div>
     </div>
 
+    //显示正文
     <script type="text/template" id="wx-phone-bd-template">
         <div class="wx_phone_preview_appmsg appmsg_wap">
             <div class="rich_media">

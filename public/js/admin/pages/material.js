@@ -11,7 +11,8 @@ define(['jquery', 'repos/material', 'uploader', 'pager', 'admin/common'], functi
             image: _.template($('#image-item-template').html()),
             video: _.template($('#video-item-template').html()),
             voice: _.template($('#voice-item-template').html()),
-            article: _.template($('#article-item-template').html()),
+            // article: _.template($('#article-item-template').html()),
+            article: '',
         };
 
         var $containers = {
@@ -57,7 +58,32 @@ define(['jquery', 'repos/material', 'uploader', 'pager', 'admin/common'], functi
                 $container.html('');
 
                 _.each($items, function($item) {
-                    $container.append($template($item));
+                    var childEle = '';
+                    if($type=='article'){
+                        if($item.childrens.length>0){
+                            //多图文消息preview
+                            $template = _.template($('#wx-preview-mutilarticle-bd-template').html());
+                            var i=0;
+                            var articlesArr=[];
+                            for (item in $item.childrens) {
+                                articlesArr[i] = $item.childrens[item];
+                                i++;
+                            }
+                            var childEle = $template({
+                                firstTitle:$item.title,
+                                coverUrl:$item.cover_url,
+                                articlesArr:articlesArr});
+                        }else{
+                            //单图文消息preview
+                            $template = _.template($('#wx-preview-article-bd-template').html());
+                            var d = new Date((new Date($item.created_at)).getTime());
+                            $item.ctime = parseInt(d.getUTCMonth()+1)+'月'+d.getDate()+'日';
+                            childEle = $template({item:$item});
+                        }
+                    }else{
+                        childEle = $template($item);
+                    }
+                    $container.append(childEle);
                 });
                 $pagers[$type].display({
                     total: window.last_response.last_page,

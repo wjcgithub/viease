@@ -1,0 +1,152 @@
+.article_list {
+
+    .msg_card{
+        width: 282px;
+        float: left;
+    }
+    //多个的
+    .wx_phone_preview_card_wrp {
+        .wx_phone_preview_multi_card {
+            padding: 15px;
+            cursor: pointer;
+
+            .msg_card_inner {
+                border-radius: 3px;
+                background-color: #fff;
+                overflow: hidden;
+                border: 1px solid #e7e7eb;
+
+                .card_cover_appmsg_item {
+                    margin: 6px;
+                    position: relative;
+                }
+
+                .card_cover_appmsg_inner {
+                    position: relative;
+                    height: 140px;
+                    overflow: hidden;
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    background-size: cover;
+
+                    .card_cover_thumb {
+                        width: 239px;
+                        height: 120px;
+                    }
+                }
+            }
+
+            .card_appmsg_item {
+                overflow: hidden;
+                padding: 6px;
+                border-top: 1px solid #e7e7eb;
+
+                .card_appmsg_content {
+                    overflow: hidden;
+                }
+
+                .card_appmsg_thumb {
+                    float: right;
+                    margin-left: 10px;
+                    width: 45px;
+                    height: 45px;
+                }
+            }
+        }
+
+        //多个的第一张
+        .has_first_cover {
+            .card_cover_title {
+                position: absolute;
+                max-height: 42px;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.5) !important;
+                filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#80000000', endcolorstr = '#80000000');
+                color: #fff;
+                padding: 5px 6px;
+            }
+        }
+
+        //单个的
+        .wx_phone_preview_card {
+            padding: 15px;
+            cursor: pointer;
+
+            .msg_card_inner {
+                border-radius: 3px;
+                background-color: #fff;
+                overflow: hidden;
+                border: 1px solid #e7e7eb;
+
+                .msg_card_bd {
+                    padding: 8px;
+                    background-color: #fff;
+
+                    .msg_card_title {
+                        margin-bottom: 6px;
+                        max-height: 40px;
+                        font-size: 14px;
+                        overflow: hidden;
+                        font-weight: 400;
+                        font-style: normal;
+                        line-height: 1.2;
+                        word-wrap: normal;
+                        white-space: pre-wrap;
+                    }
+
+                    .msg_card_info {
+                        font-size: 13px;
+                        line-height: 20px;
+                        margin-bottom: 12px;
+                        color: #8d8d8d;
+                    }
+
+                    .msg_card_extra_info {
+                        height: 120px;
+                        overflow: hidden;
+                        background-repeat: no-repeat;
+                        background-position: center center;
+                        background-size: cover;
+                        margin: 14px 0 5px;
+
+                        .appmsg_thumb {
+                            width: 239px;
+                            height: 120px;
+                        }
+                    }
+
+                    .msg_card_desc {
+                        max-height: 42px;
+                        overflow: hidden;
+                        font-size: 12px;
+                        word-wrap: normal;
+                        white-space: pre-wrap;
+                    }
+                }
+
+                .msg_card_ft {
+                    background-color: #fff;
+                    line-height: 38px;
+                    padding: 0;
+                    margin: 0 8px;
+                    font-size: 12px;
+                    border-top: 1px solid #e7e7eb;
+
+                    .icon_arrow_default {
+                        float: right;
+                        margin-top: 10px;
+                        background: url('/image/base_z324410.png') 0 -2869px no-repeat;
+                        width: 16px;
+                        height: 15px;
+                        vertical-align: middle;
+                        display: inline-block;
+                        line-height: 300px;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+    }
+}
