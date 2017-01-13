@@ -89,7 +89,7 @@ class FanDetails extends Command
                         $fans = $userService->batchGet($fans->lists('openid')->toArray());
 
                         foreach ($fans as $fan) {
-                            Log::info('$fan-info'. $fan);
+                            Log::info('$fan-info'. json_decode($fan));
                             $fan = $fanService->formatFromWeChat($fan);
                             $fanModel->where('openid', $fan['openid'])->update($fan);
                             $this->output->progressAdvance();
