@@ -79,6 +79,13 @@ class FanDetails extends Command
                  ->orderBy('id', 'desc')
                  ->chunk(100,
                     function ($fans) use ($userService, $accountId, $fanModel, $fanService) {
+
+                        Log::info('----------------------------');
+                        Log::info($fans);
+                        Log::info($fans->lists('openid'));
+                        Log::info($fans->lists('openid')->toArray());
+                        Log::info('----------------------------');
+
                         $fans = $userService->batchGet($fans->lists('openid')->toArray());
 
                         foreach ($fans as $fan) {
