@@ -73,12 +73,12 @@ class FanDetails extends Command
         $userService = CurentWex::getWex($account)->user;
         $fanService = new FanService();
 
-        $accountId = $account->id;
+        $accountId = $account->account_id;
 
         $fanModel->where('account_id', $accountId)
                  ->orderBy('id', 'desc')
                  ->chunk(100,
-                    function ($fans) use ($userService, $accountId, $fanModel, $fanService) {
+                    function ($fans) use ($userService, $fanModel, $fanService) {
 
                         Log::info('----------------------------');
                         Log::info(json_encode($fans));
