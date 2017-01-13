@@ -81,9 +81,9 @@ class FanDetails extends Command
                     function ($fans) use ($userService, $accountId, $fanModel, $fanService) {
 
                         Log::info('----------------------------');
-                        Log::info($fans);
-                        Log::info($fans->lists('openid'));
-                        Log::info($fans->lists('openid')->toArray());
+                        Log::info(json_encode($fans));
+                        Log::info(json_encode($fans->lists('openid')));
+                        Log::info(json_encode($fans->lists('openid')->toArray()));
                         Log::info('----------------------------');
 
                         $fans = $userService->batchGet($fans->lists('openid')->toArray());
