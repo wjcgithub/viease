@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\CurentWex;
+use EasyWeChat\Support\Log;
 use Illuminate\Console\Command;
 use App\Models\Fan as FanModel;
 use App\Models\Account;
@@ -83,6 +84,7 @@ class FanDetails extends Command
 
                         foreach ($fans as $fan) {
                             $fan = $fanService->formatFromWeChat($fan);
+                            Log::info('$fan-info'. $fan);
                             $fanModel->where('openid', $fan['openid'])->update($fan);
                             $this->output->progressAdvance();
                         }

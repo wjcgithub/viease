@@ -98,7 +98,7 @@ class Fans extends Command
             $fans = $userService->lists($openId);
         }
 
-        $this->call('sync:fan_details', array('account_id' => $account->id));
+        $this->call('sync:fan_details', array('account_id' => $accountId));
 
         $this->output->progressFinish();
     }
