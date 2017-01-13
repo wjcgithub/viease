@@ -43,6 +43,17 @@ class MaterialRepository
     }
 
     /**
+     * 获取单一素材
+     * @param $id
+     * @return mixed
+     */
+    public function getByid($id)
+    {
+        return $this->model->where('id', $id)
+            ->with('childrens');
+    }
+
+    /**
      * mediaId获取访问资源Url.
      *
      * @param string $mediaId mediaId

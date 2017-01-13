@@ -136,46 +136,46 @@
 
 <script type="text/template" id="wx-preview-mutilarticle-bd-template">
     <div class="msg_card wx_phone_preview_multi_card has_first_cover" data-id=>
-        <input type="hidden" class="hide_article_id" value="<%= id %>"/>
-        <a href="msg_card_inner">
-        <div class="msg_card_inner">
-            <div class="card_cover_appmsg_item jsPhoneViewCard" data-index="0">
-                <div class="card_cover_appmsg_inner">
-                    <img class="card_cover_thumb" src="<%= coverUrl %>">
+        <a href="/admin/material/article-update?id=<%= id %>">
+            <div class="msg_card_inner">
+                <div class="card_cover_appmsg_item jsPhoneViewCard" data-index="0">
+                    <div class="card_cover_appmsg_inner">
+                        <img class="card_cover_thumb" src="<%= coverUrl %>">
+                    </div>
+                    <strong class="card_cover_title" title=""><%= firstTitle %></strong>
                 </div>
-                <strong class="card_cover_title" title=""><%= firstTitle %></strong>
+
+                <% _.each(articlesArr, function(n){ %>
+                    <div class="card_appmsg_item dn jsPhoneViewCard" data-index="0">
+                        <img class="card_appmsg_thumb" src="<%= n.cover_url %>">
+                        <div class="card_appmsg_content" title=""><%= n.title %></div>
+                    </div>
+                <% }); %>
             </div>
-
-            <% _.each(articlesArr, function(n){ %>
-                <div class="card_appmsg_item dn jsPhoneViewCard" data-index="0">
-                    <img class="card_appmsg_thumb" src="<%= n.cover_url %>">
-                    <div class="card_appmsg_content" title=""><%= n.title %></div>
-                </div>
-            <% }); %>
-
-        </div>
+        </a>
     </div>
 </script>
 
 <script type="text/template" id="wx-preview-article-bd-template">
     <div class="msg_card wx_phone_preview_card" data-index="0">
-        <input type="hidden" class="hide_article_id" value="<%= id %>"/>
-        <div class="msg_card_inner">
-            <div class="msg_card_bd">
-                <h4 class="msg_card_title" title="<%= item.title %>"><%= item.title %></h4>
-                <div class="msg_card_info">
-                    <%= item.ctime %>
-                </div>
+        <a href="/admin/material/article-update?id=<%= item.id %>">
+            <div class="msg_card_inner">
+                <div class="msg_card_bd">
+                    <h4 class="msg_card_title" title="<%= item.title %>"><%= item.title %></h4>
+                    <div class="msg_card_info">
+                        <%= item.ctime %>
+                    </div>
 
-                <div class="msg_card_extra_info">
-                    <img class="appmsg_thumb" src="<%= item.cover_url %>">
-                </div>
+                    <div class="msg_card_extra_info">
+                        <img class="appmsg_thumb" src="<%= item.cover_url %>">
+                    </div>
 
-                <div class="msg_card_desc" title="<%= item.description %>"><%= item.description %></div>
+                    <div class="msg_card_desc" title="<%= item.description %>"><%= item.description %></div>
+                </div>
+                <div class="msg_card_ft">
+                    <i class="icon_arrow_default"></i>阅读原文</div>
             </div>
-            <div class="msg_card_ft">
-                <i class="icon_arrow_default"></i>阅读原文</div>
-        </div>
+        </a>
     </div>
 </script>
 @stop

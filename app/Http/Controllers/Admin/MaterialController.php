@@ -13,6 +13,7 @@ use EasyWeChat\Broadcast\Broadcast;
 use EasyWeChat\Support\Log;
 use Illuminate\Http\Request;
 use App\Models\Account;
+use Illuminate\Support\Facades\App;
 
 /**
  * 素材管理.
@@ -75,6 +76,16 @@ class MaterialController extends Controller
     }
 
     /**
+     * 获取指定的素材
+     * @param Request $request
+     * @return \App\Repositories\Response
+     */
+    public function getMaterialById(Request $request, $id)
+    {
+        return $this->materialRepository->getByid($id);
+    }
+
+    /**
      * 获取素材.
      *
      * @param Request $request request
@@ -116,13 +127,34 @@ class MaterialController extends Controller
     }
 
     /**
+     * 创建新图文.
+     *
+     * @param ArticleRequest $request request
+     */
+    public function postNewArticle(ArticleRequest $request)
+    {
+        try{
+//            $broadcast = CurentWex::getWex()->broadcast;
+//            $messageType = Broadcast::MSG_TYPE_NEWS;
+//            $media_id = 'sSUvROGbJHhPwch-6RuuqmSp9zwFjhVXIFCQRvtamAs';
+//            $openidArr = ['ob43SwB_v59vBhVkLpT0lQdYgQKk','ob43SwHjEhm8Ksd7gAEuqntLAiFY','ob43SwJdR_RCIfdFqfJYiGgxlybE'];
+//            $broadcast->send($messageType, $media_id, $openidArr);
+//            die;
+        }catch (\Exception $e){
+            Log::info($e->getTraceAsString());
+        }
+        $rest = $this->materialRepository->storeArticle($this->account()->id,$request->get('article'),NULL,Material::CREATED_FROM_SELF);
+        return response(['media_id'=>$rest]);
+    }
+
+    /**
      * 展示修改文章.
      *
      * @param int $id id
      */
-    public function getArticleUpdate($id)
+    public function getArticleUpdate(Request $request)
     {
-        $account = $this->materialRepository->getById($id);
+        $account = $this->materialRepository->getById($request->get('id'));
 
         return admin_view('material.new-article', compact('account'));
     }
@@ -152,27 +184,6 @@ class MaterialController extends Controller
         $this->accountRepository->destroy($id);
 
         return redirect(admin_url('account'))->withMessage('删除成功！');
-    }
-
-    /**
-     * 创建新图文.
-     *
-     * @param ArticleRequest $request request
-     */
-    public function postNewArticle(ArticleRequest $request)
-    {
-        try{
-//            $broadcast = CurentWex::getWex()->broadcast;
-//            $messageType = Broadcast::MSG_TYPE_NEWS;
-//            $media_id = 'sSUvROGbJHhPwch-6RuuqmSp9zwFjhVXIFCQRvtamAs';
-//            $openidArr = ['ob43SwB_v59vBhVkLpT0lQdYgQKk','ob43SwHjEhm8Ksd7gAEuqntLAiFY','ob43SwJdR_RCIfdFqfJYiGgxlybE'];
-//            $broadcast->send($messageType, $media_id, $openidArr);
-//            die;
-        }catch (\Exception $e){
-            Log::info($e->getTraceAsString());
-        }
-        $rest = $this->materialRepository->storeArticle($this->account()->id,$request->get('article'),NULL,Material::CREATED_FROM_SELF);
-        return response(['media_id'=>$rest]);
     }
 
     /**

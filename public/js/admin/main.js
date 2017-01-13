@@ -19,6 +19,8 @@ requirejs.config({
         jquery: '//cdn.bootcss.com/jquery/2.1.4/jquery.min',
         jqueryWeui:'//cdn.bootcss.com/jquery-weui/1.0.0/js/jquery-weui.min',
         layer:'plugins/layer/layer',
+        jquerySpin:'jquery.spin',
+        spin:'spin.min',
         underscore: 'underscore-min',
         fastclick: 'fastclick.min',
         relocator: 'relocator-1.0.1.min',
@@ -50,8 +52,12 @@ requirejs.config({
             deps: ['plugins/validator.js/i18n/zh_CN']
         },
         jqueryWeui:{
-            exports: 'layer',
-            deps: ['plugins/validator.js/i18n/zh_CN']
+            exports: 'jqueryWeui',
+            deps: ['jquery']
+        },
+        jquerySpin:{
+            exports: 'jquerySpin',
+            deps: ['jquery','spin']
         },
         plupload: {
             exports: 'plupload'

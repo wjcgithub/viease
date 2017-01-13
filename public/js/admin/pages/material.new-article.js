@@ -3,7 +3,7 @@
  *
  * @author overtrue <anzhengchao@gmail.com>
  */
-define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'layer', 'jqueryWeui'], function ($, Uploader, Util, Article) {
+define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'layer', 'jqueryWeui','jquerySpin'], function ($, Uploader, Util, Article) {
     $(function () {
         var $ue = UE.getEditor('container');
         var $form = $('.article-form');
@@ -12,8 +12,108 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
         $ue.ready(function () {
             // $ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
             // 初始化第一张图片
-            $firstItem.find('a.edit').click();
+            // var opts = {
+            //     lines: 13 // The number of lines to draw
+            //     , length: 28 // The length of each line
+            //     , width: 14 // The line thickness
+            //     , radius: 42 // The radius of the inner circle
+            //     , scale: 1 // Scales overall size of the spinner
+            //     , corners: 1 // Corner roundness (0..1)
+            //     , color: '#000' // #rgb or #rrggbb or array of colors
+            //     , opacity: 0.25 // Opacity of the lines
+            //     , rotate: 0 // The rotation offset
+            //     , direction: 1 // 1: clockwise, -1: counterclockwise
+            //     , speed: 1 // Rounds per second
+            //     , trail: 60 // Afterglow percentage
+            //     , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+            //     , zIndex: 2e9 // The z-index (defaults to 2000000000)
+            //     , className: 'spinner' // The CSS class to assign to the spinner
+            //     , top: '50%' // Top position relative to parent
+            //     , left: '50%' // Left position relative to parent
+            //     , shadow: 1 // Whether to render a shadow
+            //     , hwaccel: 1 // Whether to use hardware acceleration
+            //     , position: 'absolute' // Element positioning
+            // }
+            // $('#console-content-wrapper').spin(opts);
+            // $('#console-content-wrapper').spin();
+            var $articleId = Util.getUrlParam('id');
+            alert($articleId);
+            if(isNaN($articleId)){
+                init();
+            }else{
+                Util.request('get', 'material/material-by-id/'+$articleId,[],function ($resp){
+                    console.log($resp);
+                    init();
+                })
+            }
         });
+
+        function init() {
+            // 添加项目
+            $('.articles-preview-container').on('click', '.add-new-item', function () {
+                var $parentItem = $(this).closest('.article-preview-item');
+                var $id = (new Date).getTime();
+                var $item = $($previewItemTemplate({item: {'cover_url': '/image/slt.png'}})).prop('id', $id);
+                $parentItem.before($item);
+                Article.add($id)
+                performAddBtn();
+            });
+
+            // 编辑项目
+            $('.articles-preview-container').on('click', 'a.edit', function () {
+                var $item = $(this).closest('.article-preview-item');
+                if ($item.hasClass('active')) {
+                    return;
+                }
+                var $article = Article.get($item.prop('id'));
+                console.log('form' + $item.prop('id') + "被编辑，内容为" + $article);
+                console.log($article);
+                $item.addClass('active').siblings().removeClass('active');
+                renderForm($article);
+            });
+
+            // 删除项目
+            $('.articles-preview-container').on('click', 'a.delete', function () {
+                var $item = $(this).closest('.article-preview-item');
+
+                Article.delete($item.prop('id'));
+
+                $item.slideUp(200, function () {
+                    $(this).remove();
+
+                    performAddBtn();
+                });
+
+                window.location.reload();
+            });
+
+            var $articles = Article.all();
+
+            //初始化除了第一张的其他图片
+            for ($id in $articles) {
+                console.log($id)
+                if ($id == 'article-first') {
+                    continue;
+                }
+
+                if (!$articles[$id].cover_url) {
+                    $articles[$id].cover_url = '/image/slt.png';
+                }
+                $firstItem.after($($previewItemTemplate({item: $articles[$id]})).prop('id', $id));
+            }
+
+            $firstItem.find('a.edit').click();
+            $form.on('keyup', saveForm);
+            $ue.addListener('keyup', saveForm);
+            $('input[name=show_cover_pic]').on('click', saveForm);
+            $('.btn-save').on('click', saveAll);
+            $('.btn-preview').on('click', wexPreview);
+            $('.btn-save-send').on('click', wexSaveSend);
+            $('.btn-open-imglib').on('click', function () {
+                showChoseImageDialog("", "/admin/material/imglib");
+            });
+        }
+
         //检查是否显示添加按钮
         function performAddBtn() {
             var $addBtnBox = $('.add-new-item').closest('.article-preview-item');
@@ -313,69 +413,6 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             }
         }
 
-        // 添加项目
-        $('.articles-preview-container').on('click', '.add-new-item', function () {
-            var $parentItem = $(this).closest('.article-preview-item');
-            var $id = (new Date).getTime();
-            var $item = $($previewItemTemplate({item: {'cover_url': '/image/slt.png'}})).prop('id', $id);
-            $parentItem.before($item);
-            Article.add($id)
-            performAddBtn();
-        });
-
-        // 编辑项目
-        $('.articles-preview-container').on('click', 'a.edit', function () {
-            var $item = $(this).closest('.article-preview-item');
-            if ($item.hasClass('active')) {
-                return;
-            }
-            var $article = Article.get($item.prop('id'));
-            console.log('form' + $item.prop('id') + "被编辑，内容为" + $article);
-            console.log($article);
-            $item.addClass('active').siblings().removeClass('active');
-            renderForm($article);
-        });
-
-        // 删除项目
-        $('.articles-preview-container').on('click', 'a.delete', function () {
-            var $item = $(this).closest('.article-preview-item');
-
-            Article.delete($item.prop('id'));
-
-            $item.slideUp(200, function () {
-                $(this).remove();
-
-                performAddBtn();
-            });
-
-            window.location.reload();
-        });
-
-        var $articles = Article.all();
-
-        //初始化除了第一张的其他图片
-        for ($id in $articles) {
-            console.log($id)
-            if ($id == 'article-first') {
-                continue;
-            }
-
-            if (!$articles[$id].cover_url) {
-                $articles[$id].cover_url = '/image/slt.png';
-            }
-            $firstItem.after($($previewItemTemplate({item: $articles[$id]})).prop('id', $id));
-        }
-
-        $form.on('keyup', saveForm);
-        $ue.addListener('keyup', saveForm);
-        $('input[name=show_cover_pic]').on('click', saveForm);
-        $('.btn-save').on('click', saveAll);
-        $('.btn-preview').on('click', wexPreview);
-        $('.btn-save-send').on('click', wexSaveSend);
-
-        $('.btn-open-imglib').on('click', function () {
-            showChoseImageDialog("", "/admin/material/imglib");
-        });
 
     });
 });

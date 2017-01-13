@@ -46,7 +46,7 @@
         <div class="table-row">
           <div class="left table-cell">
             <div class="logo">
-              <a href="{{ admin_url('/') }}"><img src="{{asset('img/logo-bak.svg')}}" alt=""></a>
+              <a href="{{ admin_url('/') }}"><img src="{{asset('img/viease.png')}}" alt=""></a>
             </div>
           </div>
           <div class="right table-cell">
@@ -124,7 +124,7 @@
         <aside class="console-sidebar-wrapper table-cell">
         @include('admin.partials.sidebar')
         </aside>
-        <section class="console-content-wrapper table-cell">
+        <section class="console-content-wrapper table-cell" id="console-content-wrapper">
           @yield('content')
         </section>
       </section>
