@@ -9,7 +9,6 @@ use App\Models\Fan as FanModel;
 use App\Models\Account;
 use App\Services\Fan as FanService;
 use App\Repositories\AccountRepository;
-use Overtrue\Wechat\User;
 
 class FanDetails extends Command
 {
@@ -83,8 +82,8 @@ class FanDetails extends Command
                         $fans = $userService->batchGet($fans->lists('openid')->toArray());
 
                         foreach ($fans as $fan) {
-                            $fan = $fanService->formatFromWeChat($fan);
                             Log::info('$fan-info'. $fan);
+                            $fan = $fanService->formatFromWeChat($fan);
                             $fanModel->where('openid', $fan['openid'])->update($fan);
                             $this->output->progressAdvance();
                         }
