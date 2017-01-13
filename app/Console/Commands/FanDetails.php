@@ -70,8 +70,7 @@ class FanDetails extends Command
 
         $this->output->progressStart($total);
 
-
-        $userService = CurentWex::getWex()->user;
+        $userService = CurentWex::getWex($account)->user;
         $fanService = new FanService();
 
         $accountId = $account->id;
