@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\CurentWex;
 use Illuminate\Console\Command;
 use App\Models\Fan as FanModel;
 use App\Models\Account;
@@ -69,7 +70,8 @@ class FanDetails extends Command
 
         $this->output->progressStart($total);
 
-        $userService = new User($account->app_id, $account->app_secret);
+
+        $userService = CurentWex::getWex()->user;
         $fanService = new FanService();
 
         $accountId = $account->id;

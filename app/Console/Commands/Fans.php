@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Services\CurentWex;
 use Illuminate\Console\Command;
 use App\Models\Fan as FanModel;
 use App\Models\Account;
 use App\Repositories\AccountRepository;
-use Overtrue\Wechat\User;
 
 class Fans extends Command
 {
@@ -50,7 +50,8 @@ class Fans extends Command
         /*
          * 2 初始化 SDK Config, 构建 SDK 对象
          */
-        $userService = new User($account->app_id, $account->app_secret);
+
+        $userService = CurentWex::getWex($account)->user;
 
         $nextOpenId = null;
 
