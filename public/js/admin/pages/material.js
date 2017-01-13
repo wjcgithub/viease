@@ -72,6 +72,7 @@ define(['jquery', 'repos/material', 'uploader', 'pager', 'admin/common'], functi
                             var childEle = $template({
                                 firstTitle:$item.title,
                                 coverUrl:$item.cover_url,
+                                id:$item.id,
                                 articlesArr:articlesArr});
                         }else{
                             //单图文消息preview

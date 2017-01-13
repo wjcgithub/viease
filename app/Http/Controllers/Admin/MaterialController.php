@@ -116,6 +116,45 @@ class MaterialController extends Controller
     }
 
     /**
+     * 展示修改文章.
+     *
+     * @param int $id id
+     */
+    public function getArticleUpdate($id)
+    {
+        $account = $this->materialRepository->getById($id);
+
+        return admin_view('material.new-article', compact('account'));
+    }
+
+    /**
+     * 提交文章修改.
+     *
+     * @param int           $id      id
+     * @param UpdateRequest $request request
+     *
+     * @return Redirect
+     */
+    public function postArticleUpdate(UpdateRequest $request, $id)
+    {
+        $this->accountRepository->update($id, $request);
+
+        return redirect(admin_url('account'))->withMessage('修改成功！');
+    }
+
+    /**
+     * 删除公众号.
+     *
+     * @param ineger $id 公众号iD
+     */
+    public function getDestroy($id)
+    {
+        $this->accountRepository->destroy($id);
+
+        return redirect(admin_url('account'))->withMessage('删除成功！');
+    }
+
+    /**
      * 创建新图文.
      *
      * @param ArticleRequest $request request

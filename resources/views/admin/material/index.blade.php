@@ -135,7 +135,9 @@
 </script>
 
 <script type="text/template" id="wx-preview-mutilarticle-bd-template">
-    <div class="msg_card wx_phone_preview_multi_card has_first_cover">
+    <div class="msg_card wx_phone_preview_multi_card has_first_cover" data-id=>
+        <input type="hidden" class="hide_article_id" value="<%= id %>"/>
+        <a href="msg_card_inner">
         <div class="msg_card_inner">
             <div class="card_cover_appmsg_item jsPhoneViewCard" data-index="0">
                 <div class="card_cover_appmsg_inner">
@@ -157,6 +159,7 @@
 
 <script type="text/template" id="wx-preview-article-bd-template">
     <div class="msg_card wx_phone_preview_card" data-index="0">
+        <input type="hidden" class="hide_article_id" value="<%= id %>"/>
         <div class="msg_card_inner">
             <div class="msg_card_bd">
                 <h4 class="msg_card_title" title="<%= item.title %>"><%= item.title %></h4>

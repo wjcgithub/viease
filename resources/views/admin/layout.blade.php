@@ -46,7 +46,7 @@
         <div class="table-row">
           <div class="left table-cell">
             <div class="logo">
-              <a href="{{ admin_url('/') }}"><img src="{{asset('img/logo.svg')}}" alt=""></a>
+              <a href="{{ admin_url('/') }}"><img src="{{asset('img/logo-bak.svg')}}" alt=""></a>
             </div>
           </div>
           <div class="right table-cell">
