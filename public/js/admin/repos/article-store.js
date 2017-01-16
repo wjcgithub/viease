@@ -35,17 +35,35 @@ define(['jquery', 'util', 'store'], function($, Util, Store){
             Store.set('articles', {});
         },
 
-        add: function ($id) {
+        add: function ($id, item) {
+            if(!arguments[1]) item = null;
+
             var $newItem = {
                 title:'',
                 author:'',
                 content:'',
                 cover_url:'',
+                cover_media_id:'',
                 description:'',
                 source_url:''
             }
 
+            $newItem = item || $newItem;
+
             this.put($id, $newItem);
+        },
+
+        fillArticle: function (item) {
+            var $attributes = new Object();
+            $attributes.title = item.title;
+            $attributes.author = item.author;
+            $attributes.content = item.content;
+            $attributes.cover_media_id = item.cover_media_id;
+            $attributes.cover_url = item.cover_url;
+            $attributes.description = item.description;
+            $attributes.show_cover_pic = item.show_cover_pic;
+            $attributes.source_url = item.source_url;
+            return $attributes;
         },
 
         getLength: function () {
@@ -81,6 +99,7 @@ define(['jquery', 'util', 'store'], function($, Util, Store){
             }
             return '';
         },
+
         getPreById: function (id) {
             if(id!=''){
                 var tmp='';

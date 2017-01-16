@@ -50,7 +50,8 @@ class MaterialRepository
     public function getByid($id)
     {
         return $this->model->where('id', $id)
-            ->with('childrens');
+            ->with('childrens')
+            ->first();
     }
 
     /**

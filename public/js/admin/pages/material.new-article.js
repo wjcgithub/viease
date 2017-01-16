@@ -37,12 +37,34 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             // $('#console-content-wrapper').spin(opts);
             // $('#console-content-wrapper').spin();
             var $articleId = Util.getUrlParam('id');
-            alert($articleId);
-            if(isNaN($articleId)){
+            if(isNaN($articleId) || !$articleId){
                 init();
             }else{
                 Util.request('get', 'material/material-by-id/'+$articleId,[],function ($resp){
+                    Article.clean();
                     console.log($resp);
+                    var $attributes = new Object();
+                    $attributes.title = $resp.title;
+                    $attributes.author = $resp.author;
+                    $attributes.content = $resp.content;
+                    $attributes.cover_media_id = $resp.cover_media_id;
+                    $attributes.cover_url = $resp.cover_url;
+                    $attributes.description = $resp.description;
+                    $attributes.show_cover_pic = $resp.show_cover_pic;
+                    $attributes.source_url = $resp.source_url;
+                    Article.add('article-first', $attributes);
+
+                    if($resp.childrens.length > 0){
+                        $resp.childrens.forEach(function ($item,index,arr){
+                                var $id = generateArticleId();
+                                $id = parseInt($id)-index*2;
+                            console.log($id);
+                            console.log($item);
+                                var $attributes = Article.fillArticle($item);
+                                Article.put($id, $attributes);
+                        });
+                    }
+
                     init();
                 })
             }
@@ -52,7 +74,7 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             // 添加项目
             $('.articles-preview-container').on('click', '.add-new-item', function () {
                 var $parentItem = $(this).closest('.article-preview-item');
-                var $id = (new Date).getTime();
+                var $id = generateArticleId();
                 var $item = $($previewItemTemplate({item: {'cover_url': '/image/slt.png'}})).prop('id', $id);
                 $parentItem.before($item);
                 Article.add($id)
@@ -114,6 +136,14 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             });
         }
 
+        /**
+         * 生成文章id
+         * @returns {number}
+         */
+        function generateArticleId() {
+            return (new Date()).getTime();
+        }
+
         //检查是否显示添加按钮
         function performAddBtn() {
             var $addBtnBox = $('.add-new-item').closest('.article-preview-item');
@@ -127,7 +157,6 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
 
         // 根据属性渲染 form
         function renderForm($attributes) {
-            console.log($attributes);
             // 必须从表单字段开始遍历
             var $keys = Util.parseForm($form);
 
@@ -175,7 +204,6 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             }else{
                 $attributes.show_cover_pic=0;
             }
-            console.log($attributes)
             $attributes.content = $ue.getContent();
             Article.put($id, $attributes);
 

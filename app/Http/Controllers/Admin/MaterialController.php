@@ -10,10 +10,10 @@ use App\Repositories\MaterialRepository;
 use App\Http\Controllers\Controller;
 use App\Services\CurentWex;
 use EasyWeChat\Broadcast\Broadcast;
-use EasyWeChat\Support\Log;
 use Illuminate\Http\Request;
 use App\Models\Account;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 
 /**
  * 素材管理.
@@ -82,7 +82,8 @@ class MaterialController extends Controller
      */
     public function getMaterialById(Request $request, $id)
     {
-        return $this->materialRepository->getByid($id);
+        $articles = $this->materialRepository->getByid($id);
+        return json_encode($articles);
     }
 
     /**
