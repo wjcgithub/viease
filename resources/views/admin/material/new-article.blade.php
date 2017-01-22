@@ -99,8 +99,7 @@
             </div>
             <div class="col-md-12 text-center">
                 <hr>
-                <input type="hidden" name="cover_media_id">
-                <input type="hidden" name="cover_url">
+                <input type="hidden" name="article_id" id="article_id" value="0">
                 <button type="submit" class="btn btn-primary btn-save">保 存</button>
                 <button type="submit" class="btn btn-default btn-preview">预 览</button>
                 <button type="submit" class="btn btn-default btn-save-send btn-success">保存并发送</button>
@@ -135,6 +134,7 @@
 
                     <div class="btn_wx_phone_preview_wrp">
                         <a class="btn btn_default btn_wx_phone_preview jsPhoneViewPub">发送到手机预览</a>
+                        <a class="layui-layer-ico layui-layer-close layui-layer-close2 btn btn_default btn_wx_phone_preview btn_wx_phone_preview_close jsPhoneViewPub" href="javascript:void(0);">关闭</a>
                     </div>
                 </div>
             </div>

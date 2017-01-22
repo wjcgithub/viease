@@ -144,6 +144,7 @@ class MaterialController extends Controller
         }catch (\Exception $e){
             Log::info($e->getTraceAsString());
         }
+        $articleId = $request->get('article_id');
         $rest = $this->materialRepository->storeArticle($this->account()->id,$request->get('article'),NULL,Material::CREATED_FROM_SELF);
         return response(['media_id'=>$rest]);
     }

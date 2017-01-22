@@ -3,7 +3,7 @@
  *
  * @author overtrue <anzhengchao@gmail.com>
  */
-define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'layer', 'jqueryWeui','jquerySpin'], function ($, Uploader, Util, Article) {
+define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'layer', 'jqueryWeui', 'jquerySpin'], function ($, Uploader, Util, Article) {
     $(function () {
         var $ue = UE.getEditor('container');
         var $form = $('.article-form');
@@ -37,10 +37,13 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             // $('#console-content-wrapper').spin(opts);
             // $('#console-content-wrapper').spin();
             var $articleId = Util.getUrlParam('id');
-            if(isNaN($articleId) || !$articleId){
+            if (isNaN($articleId) || !$articleId) {
                 init();
-            }else{
-                Util.request('get', 'material/material-by-id/'+$articleId,[],function ($resp){
+            } else {
+                //隐藏文章id
+                $('#article_id').val($articleId);
+                //查询文章详情
+                Util.request('get', 'material/material-by-id/' + $articleId, [], function ($resp) {
                     Article.clean();
                     console.log($resp);
                     var $attributes = new Object();
@@ -54,14 +57,12 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
                     $attributes.source_url = $resp.source_url;
                     Article.add('article-first', $attributes);
 
-                    if($resp.childrens.length > 0){
-                        $resp.childrens.forEach(function ($item,index,arr){
-                                var $id = generateArticleId();
-                                $id = parseInt($id)-index*2;
-                            console.log($id);
-                            console.log($item);
-                                var $attributes = Article.fillArticle($item);
-                                Article.put($id, $attributes);
+                    if ($resp.childrens.length > 0) {
+                        $resp.childrens.forEach(function ($item, index, arr) {
+                            var $id = generateArticleId();
+                            $id = parseInt($id) - index * 2; //防止id重复,并一次递减
+                            var $attributes = Article.fillArticle($item);
+                            Article.put($id, $attributes);
                         });
                     }
 
@@ -199,10 +200,10 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
         function saveForm() {
             var $id = $('.article-preview-item.active').prop('id');
             var $attributes = Util.parseForm($($form));
-            if($attributes.show_cover_pic==''){
-                $attributes.show_cover_pic=1;
-            }else{
-                $attributes.show_cover_pic=0;
+            if ($attributes.show_cover_pic == '') {
+                $attributes.show_cover_pic = 1;
+            } else {
+                $attributes.show_cover_pic = 0;
             }
             $attributes.content = $ue.getContent();
             Article.put($id, $attributes);
@@ -212,7 +213,7 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
 
         //保存图文数据到本地缓存
         function saveAll(arg1) {
-            if(!arguments[0]) arg1 = "check";
+            if (!arguments[0]) arg1 = "check";
             //先保存当前激活的文章
             saveForm();
             //循环判断每一个
@@ -241,7 +242,7 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
                 validateNum++;
             }
             if (validateNum == Article.getLength()) {
-                if(typeof arg1 == 'object'){
+                if (typeof arg1 == 'object') {
                     $.toptip('保存成功', 'success');
                 }
                 return true;
@@ -297,27 +298,28 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
             var $tmplate = _.template($('#wx-preview-mutilarticle-bd-template').html());
             var articles = Util.reverseObject(Article.all());
             var articleLength = Article.getLength();
-            if(articleLength>1){
+            if (articleLength > 1) {
                 //多图文消息preview
                 var articlesArr = new Array();
-                var i=0;
+                var i = 0;
                 for (item in articles) {
-                    if(!isNaN(item)){
+                    if (!isNaN(item)) {
                         articlesArr[i] = articles[item]
                         i++;
                     }
                 }
                 var articleHtml = $tmplate({
-                    firstTitle:articles['article-first'].title,
-                    coverUrl:articles['article-first'].cover_url,
-                    articlesArr:articlesArr});
-            }else{
+                    firstTitle: articles['article-first'].title,
+                    coverUrl: articles['article-first'].cover_url,
+                    articlesArr: articlesArr
+                });
+            } else {
                 //单图文消息preview
                 var $tmplate = _.template($('#wx-preview-article-bd-template').html());
                 var d = new Date();
                 var articles = Article.get('article-first');
-                articles.ctime = parseInt(d.getUTCMonth()+1)+'月'+d.getDate()+'日';
-                var articleHtml = $tmplate({item:articles});
+                articles.ctime = parseInt(d.getUTCMonth() + 1) + '月' + d.getDate() + '日';
+                var articleHtml = $tmplate({item: articles});
             }
 
             $('.wx_name').text($('.current_wx_name .dropdown .dropdown-toggle').text());
@@ -336,8 +338,8 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
         function showArticle($item) {
             var $tmplate = _.template($('#wx-phone-bd-template').html());
             var d = new Date();
-            $item.ctime = d.getUTCFullYear()+'-'+parseInt(d.getUTCMonth()+1)+'-'+d.getDate();
-            $item.wxname=$('.current_wx_name .dropdown .dropdown-toggle').text();
+            $item.ctime = d.getUTCFullYear() + '-' + parseInt(d.getUTCMonth() + 1) + '-' + d.getDate();
+            $item.wxname = $('.current_wx_name .dropdown .dropdown-toggle').text();
             var article = $tmplate($item);
             $('.wx_phone_bd_replace').html(article);
         }
@@ -345,21 +347,21 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
         //上一篇下一篇文章的切换
         function switchArticle() {
             //绑定上一篇,下一篇
-            $('.wx_phone_preview .wx_article_crtl .crtl_pre_btn').on('click', function (e){
-                if(!$(this).hasClass('disabled')){
+            $('.wx_phone_preview .wx_article_crtl .crtl_pre_btn').on('click', function (e) {
+                if (!$(this).hasClass('disabled')) {
                     var key = Article.getPreById($('#currentArticle').val());
-                    if(key!=''){
+                    if (key != '') {
                         $('.wx_phone_preview .wx_article_crtl .crtl_next_btn').removeClass('disabled')
                         $('#currentArticle').val(key)
                         showArticle(Article.get(key))
-                    }else{
+                    } else {
                         $(this).addClass('disabled')
                     }
                 }
             });
 
-            $('.wx_phone_preview .wx_article_crtl .crtl_next_btn').on('click', function (e){
-                if(!$(this).hasClass('disabled')) {
+            $('.wx_phone_preview .wx_article_crtl .crtl_next_btn').on('click', function (e) {
+                if (!$(this).hasClass('disabled')) {
                     var key = Article.getNextById($('#currentArticle').val());
                     console.log($('#currentArticle').val())
                     if (key != '') {
@@ -375,14 +377,14 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
 
         //切换预览按钮
         function switchPreviewItem(e) {
-            if(e){
+            if (e) {
                 $(e.target).addClass('selected').siblings().removeClass('selected');
                 var articleLength = Article.getLength();
-                if(articleLength>1){
+                if (articleLength > 1) {
                     $('.currentNum').val(articleLength)
-                    if($(e.target).hasClass('msgbd')){
+                    if ($(e.target).hasClass('msgbd')) {
                         $('.wx_view_container .wx_article_crtl').slideDown(100);
-                    }else{
+                    } else {
                         $('.wx_view_container .wx_article_crtl').slideUp(100);
                     }
                 }
@@ -391,27 +393,20 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
 
         //微信预览
         function wexPreview() {
-            if(saveAll('preview')){
+            if (saveAll('preview')) {
                 //示范一个公告层
                 layer.open({
-                    type: 1
-                    ,
-                    title: false //不显示标题栏
-                    ,
-                    closeBtn: false
-                    ,
-                    area: '300px;'
-                    ,
-                    shade: 0.8
-                    ,
-                    id: 'LAY_layuipro' //设定一个id，防止重复弹出
-                    ,
-                    moveType: 1 //拖拽模式，0或者1
-                    ,
-                    content: (function (){
+                    type: 1,
+                    title: false, //不显示标题栏
+                    closeBtn: false,
+                    // btn: ['确认', '取消'],
+                    area: '300px;',
+                    shade: 0.8,
+                    id: 'LAY_layuipro', //设定一个id，防止重复弹出
+                    moveType: 1, //拖拽模式，0或者1
+                    content: (function () {
                         return $('#wex-preview').html()
-                    })()
-                    ,
+                    })(),
                     success: function (layero) {
                         // var btn = layero.find('.layui-layer-btn');
                         // btn.css('text-align', 'center');
@@ -419,6 +414,9 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
                         //     href: 'http://www.layui.com/'
                         //     , target: '_blank'
                         // });
+                    },
+                    cancel: function (layero, index) {
+                        layer.closeAll()
                     }
                 });
                 previewImgMsg();
@@ -432,10 +430,11 @@ define(['jquery', 'uploader', 'util', 'repos/article-store', 'admin/common', 'la
         function wexSaveSend() {
             if (saveAll('preview')) {
                 var articles = Util.reverseObject(Article.all());
-                var data = new Array();a={'article':articles}
-                Util.request('post','material/new-article',a,function (){
+                alert($('#article_id').val());
+                var data = {'article': articles, 'article_id':$('#article_id').val()}
+                Util.request('post', 'material/new-article', data, function () {
                     success('保存成功');
-                }, function (){
+                }, function () {
                     error('保存失败,请重试!');
                 })
             }
