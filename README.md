@@ -16,10 +16,10 @@
 5. 同步公众号信息哪里也用easywechat3.x从新修改
 
 ## 修改的部分预览
+![说明文字](src/4.png)
 ![说明文字](src/1.png)
 ![说明文字](src/2.png)
 ![说明文字](src/3.png)
-![说明文字](src/4.png)
 ![说明文字](src/5.png)
 
 ## todo list
