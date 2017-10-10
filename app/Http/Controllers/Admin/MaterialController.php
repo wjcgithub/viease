@@ -13,6 +13,7 @@ use EasyWeChat\Broadcast\Broadcast;
 use Illuminate\Http\Request;
 use App\Models\Account;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -41,6 +42,13 @@ class MaterialController extends Controller
      */
     public function __construct(MaterialRepository $materialRepository)
     {
+//        DB::beginTransaction();
+//        $affected = DB::update('update left2 set name = "lisi" where size in (10,20)');
+//        echo "update->".$affected."\r\n";
+//        $affected = DB::delete('delete from left2 where size not in (10)');
+//        echo "delete->".$affected;
+//        DB::commit();
+//        die();
         $this->materialRepository = $materialRepository;
     }
 
